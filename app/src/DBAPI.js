@@ -1,4 +1,4 @@
-const sql = require('mssql')
+let sql = require('mssql');
 const connInfo = require('.\\keys.js');
 
 let sqlConfig = {
@@ -7,17 +7,44 @@ let sqlConfig = {
   server: connInfo.SERVER,
   database: connInfo.DB,
   trustServerCertificate: true
+};
+
+
+
+function getPortId(portName)
+{
+    return sql.connect(sqlConfig).then(pool=>{
+        return pool.request()
+            .input("name",sql.NVarChar,portName)
+            .query('SELECT id FROM Ports WHERE Name = @name');
+    }).then(res=>{
+        console.log(res.recordset[0].id);
+        return res.recordset[0].id;
+    });
 }
 
-
-async function req() {
-    console.log("vlizam");
-    try {
-        await sql.connect(sqlConfig);
-        const result = await sql.query`select * from Ships`
-        console.log(result)
-    } catch (err) {
+function createPort(portObj)
+{
+    let id='a';
+    sql.connect(sqlConfig).then(pool=>{
+        let req = pool.request();
+        req.input("name",sql.NVarChar,portObj.name)
+            .query('INSERT INTO Ports (Name) VALUES (@name)');
+        pool.request()
+            .input("name",sql.NVarChar,portObj.name)
+            .query('SELECT id FROM Ports WHERE Name = @name');
+    }).then(res=>{
+        console.log(res);
+        console.log(id);
+    }).catch( err =>{
         console.log(err);
-    }
-};
-req();
+    })
+}
+console.log(getPortId('BurgasLmao'));
+//createPort({name:'niga'})
+
+
+
+
+
+
