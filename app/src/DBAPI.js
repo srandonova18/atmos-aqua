@@ -9,39 +9,69 @@ let sqlConfig = {
   trustServerCertificate: true
 };
 
+// let portObj = {
+//     name: 'Port of Valerian',
+//     coordinates: [ {lat: 69,lng: 12}, {lat: 34,lng: 45}]
+// }
 
+class PortsManager {
+    #pool
 
-function getPortId(portName)
-{
-    return sql.connect(sqlConfig).then(pool=>{
-        return pool.request()
-            .input("name",sql.NVarChar,portName)
-            .query('SELECT id FROM Ports WHERE Name = @name');
-    }).then(res=>{
-        console.log(res.recordset[0].id);
-        return res.recordset[0].id;
-    });
+    constructor() {
+        this.#pool = sql.connect(sqlConfig);
+    }
+
+    async #namePort({ name }) {
+        try {
+
+            let pool = await this.#pool;
+
+            let results = await pool.request()
+                .input("Name",sql.NVarChar,name)
+                .output("PortId",sql.Int)
+                .execute("CreatePort");
+            
+            const { PortId } = results.output;
+            return PortId;
+
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    async #insertPortCoordinates({ coordinates }, portId)
+    {
+        try {
+            let pool = await this.#pool;
+
+            for (const coord in coordinates) {
+                let results = await pool.request()
+                    .input("Lat",sql.Decimal,coordinates[coord].lat)
+                    .input("Lng",sql.Decimal,coordinates[coord].lng)
+                    .input("PortId",sql.Int,portId)
+                    .execute("AddCoordinates");
+            }
+            
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async createPort(portObj)
+    {
+        const portId = await this.#namePort(portObj);
+        this.#insertPortCoordinates(portObj, portId);
+    }
 }
 
-function createPort(portObj)
-{
-    let id='a';
-    sql.connect(sqlConfig).then(pool=>{
-        let req = pool.request();
-        req.input("name",sql.NVarChar,portObj.name)
-            .query('INSERT INTO Ports (Name) VALUES (@name)');
-        pool.request()
-            .input("name",sql.NVarChar,portObj.name)
-            .query('SELECT id FROM Ports WHERE Name = @name');
-    }).then(res=>{
-        console.log(res);
-        console.log(id);
-    }).catch( err =>{
-        console.log(err);
-    })
+const PM = new PortsManager;
+
+module.exports = {
+    PM
 }
-console.log(getPortId('BurgasLmao'));
-//createPort({name:'niga'})
+
+// (async () => {await PM.createPort(portObj)})();
+
 
 
 
