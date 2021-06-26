@@ -45,13 +45,12 @@ class PortsManager {
             let pool = await this.#pool;
 
             for (const coord in coordinates) {
-                let results = await pool.request()
+                await pool.request()
                     .input("Lat",sql.Decimal,coordinates[coord].lat)
                     .input("Lng",sql.Decimal,coordinates[coord].lng)
                     .input("PortId",sql.Int,portId)
                     .execute("AddCoordinates");
             }
-            
         } catch (err) {
             console.log(err);
         }
@@ -62,19 +61,29 @@ class PortsManager {
         const portId = await this.#namePort(portObj);
         this.#insertPortCoordinates(portObj, portId);
     }
+
+    async createShip(shipName)
+    {
+        try {
+            let pool = await this.#pool;
+            const request = await pool.request()
+                .input("ShipName",sql.NVarChar,shipName)
+                .query('INSERT INTO Ships (Name) VALUES (@ShipName)');
+
+            console.log(request) ;               
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 const PM = new PortsManager;
 
+(async () => {
+    await PM.createShip('Davinator');
+})();
+
 module.exports = {
     PM
 }
-
-// (async () => {await PM.createPort(portObj)})();
-
-
-
-
-
-
 
