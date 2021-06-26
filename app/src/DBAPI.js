@@ -89,12 +89,67 @@ class PortsManager {
             console.log(err);
         }
     }
+
+    async #getPortId(portName) {
+        try {
+            let pool = await this.#pool;
+            const result = await pool.request()
+                .input("Name",sql.NVarChar,portName)
+                .query("SELECT Id FROM Ports WHERE Name = @Name");
+
+            return result.recordset[0].Id;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    async #inputUserData(user)
+    {
+        let pool = await this.#pool;
+        const result = await pool.request()
+            .input("FirstName",sql.NVarChar,user.firstName)
+            .input("MiddleName",sql.NVarChar,user.middleName)
+            .input("LastName",sql.NVarChar,user.lastName)
+            .input("Role",sql.Int,user.role)
+            .input("Password",sql.NVarChar,user.password)
+            .output("UserId",sql.Int)
+            .execute("CreateUser");
+        
+        const { UserId } = result.output;
+        return UserId;
+    }
+
+    async #linkUserAndPort(portId, userId) {
+        try {
+            let pool = await this.#pool;
+            await pool.request()
+                .input("PortId",sql.Int,portId)
+                .input("UserId",sql.Int,userId)
+                .query("INSERT INTO PortsUsers (PortId, UserId) VALUES (@PortId, @UserId)")
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    async createUser(user, portName) {
+        let portId = await this.#getPortId(portName);
+        let userId = await this.#inputUserData(user);
+        await this.#linkUserAndPort(portId,userId);
+    }
 }
 
 const PM = new PortsManager;
 
+// let us = {
+//     firstName: "alan",
+//     middleName: "kurie",
+//     lastName: "asdasd",
+//     password:"123213",
+//     role: 1
+// };
+
 (async () => {
-    await PM.createCompany('Kolegite');
+    //
 })();
 
 module.exports = {
