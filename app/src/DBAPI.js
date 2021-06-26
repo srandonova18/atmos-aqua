@@ -132,9 +132,24 @@ class PortsManager {
     }
 
     async createUser(user, portName) {
-        let portId = await this.#getPortId(portName);
-        let userId = await this.#inputUserData(user);
-        await this.#linkUserAndPort(portId,userId);
+        try {
+            let portId = await this.#getPortId(portName);
+            let userId = await this.#inputUserData(user);
+            await this.#linkUserAndPort(portId,userId);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    async createContainer(containerId) {
+        try {
+            let pool = await this.#pool;
+            await pool.request()
+                .input("ContainerId",sql.Int,containerId)
+                .query("INSERT INTO Containers (Id) VALUES (@ContainerId)");
+        } catch(err) {
+            console.log(err);
+        }
     }
 }
 
@@ -149,7 +164,7 @@ const PM = new PortsManager;
 // };
 
 (async () => {
-    //
+    await PM.createContainer(1023);
 })();
 
 module.exports = {
