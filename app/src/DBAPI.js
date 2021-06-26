@@ -75,12 +75,26 @@ class PortsManager {
             console.log(err);
         }
     }
+
+    async createCompany(companyName)
+    {
+        try {
+            let pool = await this.#pool;
+            const request = await pool.request()
+                .input("CompanyName",sql.NVarChar,companyName)
+                .query('INSERT INTO Companies (Name) VALUES (@CompanyName)');
+
+            console.log(request) ;               
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 const PM = new PortsManager;
 
 (async () => {
-    await PM.createShip('Davinator');
+    await PM.createCompany('Kolegite');
 })();
 
 module.exports = {
