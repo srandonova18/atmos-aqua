@@ -167,3 +167,6 @@ typings/
 
 # DB connection config
 keys.js
+
+# Test file for DB operations
+DBtest.js
