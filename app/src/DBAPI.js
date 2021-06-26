@@ -9,11 +9,6 @@ let sqlConfig = {
   trustServerCertificate: true
 };
 
-// let portObj = {
-//     name: 'Port of Valerian',
-//     coordinates: [ {lat: 69,lng: 12}, {lat: 34,lng: 45}]
-// }
-
 class PortsManager {
     #pool
 
@@ -51,40 +46,6 @@ class PortsManager {
                     .input("PortId",sql.Int,portId)
                     .execute("AddCoordinates");
             }
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async createPort(portObj)
-    {
-        const portId = await this.#namePort(portObj);
-        this.#insertPortCoordinates(portObj, portId);
-    }
-
-    async createShip(shipName)
-    {
-        try {
-            let pool = await this.#pool;
-            const request = await pool.request()
-                .input("ShipName",sql.NVarChar,shipName)
-                .query('INSERT INTO Ships (Name) VALUES (@ShipName)');
-
-            console.log(request) ;               
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async createCompany(companyName)
-    {
-        try {
-            let pool = await this.#pool;
-            const request = await pool.request()
-                .input("CompanyName",sql.NVarChar,companyName)
-                .query('INSERT INTO Companies (Name) VALUES (@CompanyName)');
-
-            console.log(request) ;               
         } catch (err) {
             console.log(err);
         }
@@ -131,6 +92,116 @@ class PortsManager {
         }
     }
 
+    async #getCompanyId(companyName) {
+        try {
+            let pool = await this.#pool;
+            let result = await pool.request()
+                .input("CompanyName",sql.NVarChar,companyName)
+                .query("SELECT Id FROM Companies WHERE Name = @CompanyName");
+
+            return result.recordset[0].Id;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    async #insertShipmentData(shipment) {
+        try {
+
+            let pool = await this.#pool;
+            let companyRecieverId = await this.#getCompanyId(shipment.companyReciever);
+            let companySenderId = await this.#getCompanyId(shipment.companySender);
+            let result = await pool.request()
+                .input("PortId",sql.Int,shipment.portId)
+                .input("ShipId",sql.Int,shipment.shipId)
+                .input("CompanyReciever",sql.Int,companyRecieverId)
+                .input("CompanySender",sql.Int,companySenderId)
+                .input("ContainerCount",sql.Int,shipment.containers.length)
+                .output("ShipmentId",sql.Int)
+                .execute("CreateShipment")
+
+            return result.output.ShipmentId;
+           
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    async #insertContainersShipmentsData({ containers }, shipmentId) {
+        try {
+            let pool = await this.#pool;
+            for(const cont in containers) {
+                await pool.request()
+                    .input("ContainerId",sql.Int,containers[cont].id)
+                    .input("ShipmentId",sql.Int,shipmentId)
+                    .query("INSERT INTO ContainersShipments (ShipmentId, ContainerId) VALUES (@ShipmentId, @ContainerId)")
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    async #insertGoodsData({ containers }) {
+        try {
+            let pool = await this.#pool;
+            for( const cont in containers) {
+                console.log(containers[cont].id);
+                let result = await pool.request()
+                    .input("ContainerId",sql.Int,containers[cont].id)
+                    .execute("GetContainersShipmentsIdByContainersId");
+                
+                console.log(result);
+                let containersShipmentsId = result.recordset[0].Id;
+
+                for( const good of containers[cont].goods) {
+                    await pool.request()
+                        .input("ContainersShipmentsId",sql.Int,containersShipmentsId)
+                        .input("Name",sql.NVarChar,good.name)
+                        .input("Weight",sql.Decimal,good.weight)
+                        .input("Price",sql.Decimal,good.price)
+                        .input("Desc",sql.NVarChar,good.description)
+                        .execute("CreateGood")
+                }
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    async createPort(portObj)
+    {
+        const portId = await this.#namePort(portObj);
+        this.#insertPortCoordinates(portObj, portId);
+    }
+
+    async createShip(shipName)
+    {
+        try {
+            let pool = await this.#pool;
+            const request = await pool.request()
+                .input("ShipName",sql.NVarChar,shipName)
+                .query('INSERT INTO Ships (Name) VALUES (@ShipName)');
+
+            console.log(request) ;               
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async createCompany(companyName)
+    {
+        try {
+            let pool = await this.#pool;
+            const request = await pool.request()
+                .input("CompanyName",sql.NVarChar,companyName)
+                .query('INSERT INTO Companies (Name) VALUES (@CompanyName)');
+
+            console.log(request) ;               
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     async createUser(user, portName) {
         try {
             let portId = await this.#getPortId(portName);
@@ -151,20 +222,24 @@ class PortsManager {
             console.log(err);
         }
     }
+
+    async createShipment(shipment) {
+        try {
+
+            let shipmentId = await this.#insertShipmentData(shipment);
+            await this.#insertContainersShipmentsData(shipment,shipmentId);
+            await this.#insertGoodsData(shipment);
+
+        } catch(err) {
+            console.log(err);
+        }
+    }
 }
 
 const PM = new PortsManager;
 
-// let us = {
-//     firstName: "alan",
-//     middleName: "kurie",
-//     lastName: "asdasd",
-//     password:"123213",
-//     role: 1
-// };
-
 (async () => {
-    await PM.createContainer(1023);
+    //await PM.createShipment(shpmt);
 })();
 
 module.exports = {
