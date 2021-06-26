@@ -1,0 +1,113 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  color: black;
+}
+
+.site-container .background-gradient {
+  background-image: url("../../images/mainPageBg.png");
+}
+
+.site-container #about {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.site-container #about .cards-container {
+  width: 50%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.site-container #about .cards-container .card {
+  height: 350px;
+  width: 250px;
+  background: red;
+}
+
+.site-container #why-chose-us .heading {
+  height: 10%;
+}
+
+.site-container #why-chose-us .sections {
+  width: inherit;
+  height: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-item-align: bottom;
+      align-self: bottom;
+}
+
+.site-container #why-chose-us .sections .left {
+  width: 50%;
+  background: blue;
+}
+
+.site-container #why-chose-us .sections .right {
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: red;
+}
+
+.site-container #why-chose-us .sections .right .heading {
+  position: absolute;
+  left: 70%;
+}
+
+.site-container #why-chose-us .sections .right .description-cards-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -ms-flex-item-align: right;
+      align-self: right;
+}
+
+.site-container #why-chose-us .sections .right .description-cards-container .description-card {
+  background: green;
+  width: 100%;
+  height: 150px;
+  margin-left: 5vw;
+}
+/*# sourceMappingURL=style.css.map */

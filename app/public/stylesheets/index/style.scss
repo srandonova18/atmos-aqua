@@ -1,0 +1,90 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+section{
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    color: black;
+}
+
+.site-container{
+
+    .background-gradient{
+        background-image: url('../../images/mainPageBg.png');
+    }
+
+    #about{
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+        .cards-container{
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+
+            .card{
+                height: 350px;
+                width: 250px;
+                background: red;
+            }
+        }
+    }
+
+    #why-chose-us{
+
+        .heading{
+            height: 10%;
+        }
+        .sections{
+            width: inherit;
+            height: 90%;
+            display: flex;
+            flex-direction: row;
+            align-self: bottom;
+
+            .left{
+                width: 50%;
+                background: blue;
+            }
+
+            .right{
+                width: 50%;
+                display: flex;                
+                background: red;
+                
+                .heading{
+                    position: absolute;
+                    left: 70%;
+                }
+
+                .description-cards-container{
+                    width:100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    align-self: right;
+
+
+                    .description-card{
+                        background: green;
+                        width: 100%;
+                        height: 150px;
+                        margin-left: 5vw;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+
