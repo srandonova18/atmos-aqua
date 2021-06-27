@@ -324,6 +324,31 @@ class ContainerManager {
             console.log(err);
         }
     }
+
+    deleteContainer = async function(containerId) {
+        try {
+            let pool = await this.#pool;
+            await pool.request()
+                .input("ContainerId",sql.Int,containerId)
+                .query("DELETE FROM Containers WHERE Id = @ContainerId");
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    getAllContainers = async function () {
+        try {
+
+            let pool = await this.#pool;
+            let containers = await pool.request()
+                .query("SELECT Id FROM Containers");
+
+            return containers.recordset;
+            
+        } catch(err) {
+            console.log(err);
+        }
+    }
 }
 
 class CompanyManager {
