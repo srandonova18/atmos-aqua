@@ -616,8 +616,8 @@ class ShipmentManager {
         try {
 
             let pool = await this.#pool;
-            let results = pool.request()
-                .input("@PortName",sql.NVarChar.portName)
+            let results = await pool.request()
+                .input("PortName",sql.NVarChar,portName)
                 .query("SELECT Id FROM Ports WHERE Name like @PortName")
 
             return results.recordset[0].Id;
@@ -652,7 +652,7 @@ class ShipmentManager {
     #getContainersFromShipmentId = async function(shipmentId) {
         try {
             let pool = await this.#pool;
-            let containers = [];
+            let containers = [], containersShipmentsIds = [];
             
             let request = await pool.request()
                 .input("ShipmentId",sql.Int,shipmentId)
@@ -662,22 +662,26 @@ class ShipmentManager {
                 let obj = {id: -1,goods: []};
                 obj.id = record.ContainerId;
                 containers.push(obj);
+                containersShipmentsIds.push(record.Id);
             }
 
-            return containers;
+            
+            return {containers, containersShipmentsIds};
 
         } catch(err) {
             console.log(err);
         }
     }
 
-    #getGoodsFromContainer= async function (containerId) {
+    #getGoodsFromContainer= async function (containersShipmentsId) {
         try {
             let pool = await this.#pool;
-            let goods = [];
 
             let results = await pool.request()
-                .input()
+                .input("ContainersShipmentsId",sql.Int,containersShipmentsId)
+                .query("SELECT Id, Name, Weight, Price, Description FROM Goods WHERE ContainersShipmentsId = @ContainersShipmentsId")
+            
+            return results.recordset;
         } catch(err) {
             console.log(err);
         }
@@ -688,9 +692,24 @@ class ShipmentManager {
 
             let pool = await this.#pool;
             let portId = await this.#getPortId(portName);
+
+
             let shipment = await this.#getShipmentInformation(shipmentId);
-            shipment.containers = await this.#getContainersFromShipmentId(shipmentId);
-            //get goods from said records
+            let res = await this.#getContainersFromShipmentId(shipmentId);
+
+            shipment.id = shipmentId;
+
+            shipment.containers = res.containers;
+            let ContainersShipmentsId = res.containersShipmentsIds;
+
+            for(let obj in shipment.containers) {
+                for(let cont of ContainersShipmentsId) {
+                    shipment.containers[obj].goods.push(await this.#getGoodsFromContainer(cont))
+                }
+            }
+
+            return shipment;
+
         } catch(err) {
             console.log(err);
         }
