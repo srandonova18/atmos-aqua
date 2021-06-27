@@ -645,4 +645,5 @@ class DBManager {
     }
 }
 
-module.exports = { DBManager }
+const DBM = new DBManager();
+module.exports = { DBM }
