@@ -192,9 +192,11 @@ class UserManager {
             let result = await pool.request()
                 .input("Password",sql.NVarChar,password)
                 .input("Email",sql.NVarChar,email)
-                .query("SELECT Password, Email FROM Users WHERE Password like @Password AND Email like @Email")
+                .query("SELECT Id FROM Users WHERE Password like @Password AND Email like @Email")
             
-            return result.rowsAffected[0];
+            if(result.rowsAffected[0])
+                return result.recordset[0].Id;
+            return 0;
         } catch(err) {
             console.log(err);
         }
