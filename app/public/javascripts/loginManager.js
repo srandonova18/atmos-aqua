@@ -10,9 +10,11 @@ loginForm.addEventListener('submit', (e) => {
 
     let obj ={
         email: document.querySelector('#login-email').value,
-        password: document.querySelector('#login-password').value
+        password: new Hashes.MD5().hex(document.querySelector('#login-password').value)
     };
 
     fetch('/api/login', {method: 'POST', body: obj});
+
+    console.log(obj);
 
 });
