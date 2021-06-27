@@ -76,13 +76,14 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   if (req.session.userId) {
-    let { Role } = DBM.getUserById(req.session.userId);
+    let { Role } = await DBM.getUserById(req.session.userId);
     Role = Role - 1;
 
-    const portId = await getPortIdByUserId(req.session.userId)
-    const portName = await getPortName(portId);
+    const portId = await DBM.getPortIdByUserId(req.session.userId)
+    const portName = await DBM.getPortName(portId);
 
-    if (userRoutes[Role].endsWith('Admin')) {
+    if (userRoutes[Role].endsWith('admin')) {
+
       DBM.createUser({
         firstName: req.body.firstName,
         middleName: req.body.middleName,
