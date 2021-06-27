@@ -13,7 +13,7 @@ const redirectLogin = async (req, res, next) => {
   } else {
     // req.url
 
-    const { Role } = await DBM.getUserById(req.session.userId);
+    let { Role } = await DBM.getUserById(req.session.userId);
     
     Role = Role - 1;
 

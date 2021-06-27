@@ -63,7 +63,7 @@ router.post('/login', async (req, res) => {
     if (userId) {
       req.session.userId = userId;
 
-      const { Role } = await DBM.getUserById(req.session.userId);
+      let { Role } = await DBM.getUserById(req.session.userId);
       Role = Role - 1;
 
       return res.redirect(userRoutes[Role]);
@@ -76,7 +76,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   if (req.session.userId) {
-    const { Role } = DBM.getUserById(req.session.userId);
+    let { Role } = DBM.getUserById(req.session.userId);
     Role = Role - 1;
 
     const portId = await getPortIdByUserId(req.session.userId)
