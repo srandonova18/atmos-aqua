@@ -120,6 +120,18 @@ class UserManager {
         }
     }
 
+    getAllUsers = async function () {
+        try {
+            let pool = await this.#pool;
+            let result = await pool.request()
+                .query("SELECT [FirstName],[MiddleName],[LastName],[Role] FROM Users")
+            
+            return result.recordset;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     createUser = async function(user, portName) {
         try {
             let portId = await this.#getPortId(portName);
