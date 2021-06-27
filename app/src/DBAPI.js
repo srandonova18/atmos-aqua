@@ -384,6 +384,18 @@ class CompanyManager {
             console.log(err);
         }
     }
+
+    deleteCompany = async function(companyName) {
+        try {
+            let pool = await this.#pool;
+            await pool.request()
+                .input("CompanyName",sql.NVarChar,companyName)
+                .query('DELETE FROM Companies WHERE Name = @CompanyName');
+            
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 class ShipmentManager {
