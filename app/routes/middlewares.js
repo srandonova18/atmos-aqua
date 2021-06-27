@@ -14,6 +14,8 @@ const redirectLogin = async (req, res, next) => {
     // req.url
 
     const { Role } = await DBM.getUserById(req.session.userId);
+    
+    Role = Role - 1;
 
     if (req.url === userRoutes[Role]) {
       next();
