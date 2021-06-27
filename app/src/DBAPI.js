@@ -1,3 +1,4 @@
+
 let sql = require('mssql');
 const connInfo = require('.\\keys.js');
 
@@ -120,11 +121,53 @@ class UserManager {
         }
     }
 
+    getUserByNames = async function(user) {
+        try {
+            let pool = await this.#pool;
+            let result = await pool.request()
+                .input("FirstName",sql.NVarChar,user.firstName)
+                .input("MiddleName",sql.NVarChar,user.middleName)
+                .input("LastName",sql.NVarChar,user.lastName)
+                .query("SELECT [Id],[FirstName],[MiddleName],[LastName],[Role] FROM Users")
+            
+            return result.recordset[0];
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     getAllUsers = async function () {
         try {
             let pool = await this.#pool;
             let result = await pool.request()
                 .query("SELECT [FirstName],[MiddleName],[LastName],[Role] FROM Users")
+            
+            return result.recordset;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    updateUser = async function (oldUser,newUser) {
+        
+        try {
+            let pool = await this.#pool;
+
+            let res = await this.getUserByNames(oldUser);
+            let userId = res.Id;
+
+            for(const key in newUser) {
+                oldUser[key] = newUser[key];
+            }
+
+            let result = await pool.request()
+                .input("FirstName",sql.NVarChar,oldUser.firstName)
+                .input("MiddleName",sql.NVarChar,oldUser.middleName)
+                .input("LastName",sql.NVarChar,oldUser.lastName)
+                .input("Password",sql.NVarChar,oldUser.password)
+                .input("Role",sql.Int,oldUser.role)
+                .input("UserId",sql.Int,userId)
+                .execute("UpdateUser")
             
             return result.recordset;
         } catch(err) {
@@ -149,6 +192,19 @@ class PortManager {
 
     constructor(pool) {
         this.#pool = pool || sql.connect(sqlConfig);
+    }
+
+    #getPortId = async function(portName) {
+        try {
+            let pool = await this.#pool;
+            const result = await pool.request()
+                .input("Name",sql.NVarChar,portName)
+                .query("SELECT Id FROM Ports WHERE Name = @Name");
+
+            return result.recordset[0].Id;
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     #namePort = async function({ name }) {
@@ -182,6 +238,63 @@ class PortManager {
                     .execute("AddCoordinates");
             }
         } catch (err) {
+            console.log(err);
+        }
+    }
+
+    #getCoordinatesByPortsCoordinatesTableCoordinatesId = async function(coordinatesId) {
+        try {
+            let pool = await this.#pool;
+
+            let result = await pool.request()
+                .input("CoordinatesId",sql.Int,coordinatesId)
+                .query("Select [Lat],[Lng] FROM Coordinates WHERE Id = @CoordinatesId")
+            
+            return result.recordset[0];
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    #getAllPorts = async function() {
+        try {
+            let pool = await this.#pool;
+            let result = await pool.request()
+                .query("SELECT * FROM Ports");
+            return result.recordset;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    getPortCoordinates = async function () {
+        try {
+            let pool = await this.#pool;
+            let data = [], tmp;
+
+            let result = await pool.request()
+                .query("SELECT [PortId],[CoordinatesId] FROM PortsCoordinates")
+            let ports = await this.#getAllPorts();
+
+            for(let port of ports) {
+
+                tmp = {portName: port.Name, coords: []};
+
+                for(let obj of result.recordset) {
+
+                    if(port.Id==obj.PortId) {
+                        
+                        tmp.coords.push(await this.#getCoordinatesByPortsCoordinatesTableCoordinatesId(obj.CoordinatesId));
+                        
+                    }
+                }
+
+                data.push(tmp);
+            }
+
+            return data;
+
+        } catch(err) {
             console.log(err);
         }
     }
