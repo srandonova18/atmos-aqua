@@ -184,6 +184,21 @@ class UserManager {
             console.log(err);
         }
     }
+
+    doesUserExist = async function(password, email) {
+        try {
+            let pool = await this.#pool;
+
+            let result = await pool.request()
+                .input("Password",sql.NVarChar,password)
+                .input("Email",sql.NVarChar,email)
+                .query("SELECT Password, Email FROM Users WHERE Password like @Password AND Email like @Email")
+            
+            return result.rowsAffected[0];
+        } catch(err) {
+            console.log(err);
+        }
+    }
 }
 
 class PortManager {
@@ -432,6 +447,32 @@ class ShipmentManager {
         }
     }
 
+    #getCompanyName = async function(companyId) {
+        try {
+            let pool = await this.#pool;
+            let result = await pool.request()
+                .input("CompanyId",sql.NVarChar,companyId)
+                .query("SELECT Name FROM Companies WHERE Id = @CompanyId");
+
+            return result.recordset[0].Name;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    #getShipName = async function(shipId) {
+        try {
+            let pool = await this.#pool;
+            let result = await pool.request()
+                .input("ShipId",sql.NVarChar,shipId)
+                .query("SELECT Name FROM Ships WHERE Id = @ShipId");
+
+            return result.recordset[0].Name;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     #insertShipmentData = async function(shipment) {
         try {
 
@@ -506,6 +547,75 @@ class ShipmentManager {
             console.log(err);
         }
     }
+
+    // let shpmt = {
+    //     portId: 1,
+    //     shipId: 1,
+    //     companySender: "Kolegata",
+    //     companyReciever: "Paulbata",
+    //     containers: [
+    //         {id:1,goods: [ 
+    //             {id:1, name:"alabala",weight:123,price:452,description:"desc"},
+    //             {id:2, name:"cursed",weight:321,price:452,description:"desc"},
+    //             {id:3, name:"test",weight:521,price:632,description:"desc"}
+    //         ]},
+    //         {id:2, goods: [
+    //             {id:4, name:"test1",weight:123,price:452,description:"desc"},
+    //             {id:5, name:"test2",weight:321,price:452,description:"desc"},
+    //             {id:6, name:"test3",weight:521,price:632,description:"desc"}
+    //         ]}
+    //     ]
+    // };
+
+    #getPortId = async function (portName) {
+        try {
+
+            let pool = await this.#pool;
+            let results = pool.request()
+                .input("@PortName",sql.NVarChar.portName)
+                .query("SELECT Id FROM Ports WHERE Name like @PortName")
+
+            return results.recordset[0].Id;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    #getShipmentInformation = async function(shipmentId) {
+        try {
+
+            let pool = await this.#pool;
+            let shipment = {};
+
+            let results = await pool.request()
+                .input("ShipmentId",sql.Int,shipmentId)
+                .query("SELECT [ShipId],[ContainerCount],[CompanyReciever],[CompanySender] FROM Shipments WHERE Id = @ShipmentId")
+            
+
+                shipment.shipId = await this.#getShipName(results.recordset[0].ShipId);
+                shipment.containerCount = results.recordset[0].ContainerCount;
+                shipment.companySender = await this.#getCompanyName(results.recordset[0].CompanySender);
+                shipment.companyReciever = await this.#getCompanyName(results.recordset[0].CompanyReciever);
+
+                return shipment;
+
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    getShipmentFromPort = async function(portName) {
+        try {
+
+            let pool = await this.#pool;
+            let portId = await this.#getPortId(portName);
+            let shipment = await this.#getShipmentInformation()
+            //get records from said shipment
+            //get goods from said records
+        } catch(err) {
+            console.log(err);
+        }
+    }
 }
 
 class DBManager {
@@ -536,5 +646,3 @@ class DBManager {
 }
 
 module.exports = { DBManager }
-
-
