@@ -128,7 +128,20 @@ class UserManager {
                 .input("FirstName",sql.NVarChar,user.firstName)
                 .input("MiddleName",sql.NVarChar,user.middleName)
                 .input("LastName",sql.NVarChar,user.lastName)
-                .query("SELECT [Id],[FirstName],[MiddleName],[LastName],[Role] FROM Users")
+                .query("SELECT [Id],[FirstName],[MiddleName],[LastName],[Role].[Email] FROM Users")
+            
+            return result.recordset[0];
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    getUserById = async function(id) {
+        try {
+            let pool = await this.#pool;
+            let result = await pool.request()
+                .input("UserId",sql.Int,id)
+                .query("SELECT [FirstName],[MiddleName],[LastName],[Role],[Email] FROM Users WHERE Id = @UserId")
             
             return result.recordset[0];
         } catch(err) {
