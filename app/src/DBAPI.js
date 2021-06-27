@@ -335,6 +335,20 @@ class ContainerManager {
             console.log(err);
         }
     }
+
+    getAllContainers = async function () {
+        try {
+
+            let pool = await this.#pool;
+            let containers = await pool.request()
+                .query("SELECT Id FROM Containers");
+
+            return containers.recordset;
+            
+        } catch(err) {
+            console.log(err);
+        }
+    }
 }
 
 class CompanyManager {
