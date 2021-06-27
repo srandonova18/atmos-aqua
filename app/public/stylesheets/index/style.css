@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Lato%3A100%2C300%2C400%2C500%2C600%2C700%2C800%2C900%7CMontserrat%3A100%2C300%2C400%2C500%2C600%2C700%2C800%2C900&amp;subset=latin%2Clatin-ext%2Ccyrillic%2Ccyrillic-ext%2Cgreek%2Cgreek-ext%2Cvietnamese");
 * {
   margin: 0;
   padding: 0;
@@ -86,6 +87,7 @@ body .navbar .nav-right button {
 }
 
 .site-container #home .content-container {
+  z-index: 2;
   position: absolute;
   width: 60%;
   height: 100%;
@@ -101,6 +103,7 @@ body .navbar .nav-right button {
 
 .site-container #home .content-container .content h1 {
   font-family: 'Poppins', sans-serif;
+  font-weight: lighter;
   font-size: 4.5rem;
   margin-bottom: 10px;
 }
@@ -113,16 +116,45 @@ body .navbar .nav-right button {
 }
 
 .site-container #home .content-container .content p {
-  font-family: 'Montserrat';
   width: 45%;
   margin-bottom: 50px;
+  font-family: 'Lato';
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #caf0ff;
 }
 
 .site-container #home .content-container .content .try-app-button {
   padding: 20px 50px;
+  background-image: linear-gradient(348deg, #220f5f, #29bded);
+  -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.295), 0 1px 3px rgba(0, 0, 0, 0.205);
+          box-shadow: 0 4px 6px rgba(50, 50, 93, 0.295), 0 1px 3px rgba(0, 0, 0, 0.205);
+  border: none;
+  border-radius: 8px;
+  margin-right: 10px;
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.site-container #home .content-container .content .learn-more-button {
+  padding: 20px 50px;
+  background: none;
+  border: rgba(255, 255, 255, 0.692) 2px solid;
+  border-radius: 8px;
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
 }
 
 .site-container #home .home-img-container {
+  z-index: 1;
   position: relative;
   width: 100%;
   height: 100%;
@@ -165,6 +197,12 @@ body .navbar .nav-right button {
   height: 75vh;
 }
 
+.site-container #about .about-heading {
+  font-family: 'Poppins';
+  font-size: 1.5rem;
+  color: #14447a;
+}
+
 .site-container #about .cards-container {
   width: 60%;
   height: 100%;
@@ -185,8 +223,14 @@ body .navbar .nav-right button {
 .site-container #about .cards-container .card {
   height: 280px;
   width: 300px;
-  background: red;
-  border-radius: 15px;
+  background: white;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 3px 16px -1px #78e6e2;
+  box-shadow: 0px 3px 16px -1px #78e6e2;
+}
+
+.site-container #why-chose-us {
+  background: linear-gradient(200deg, #172079 2%, #38afe1 100%);
 }
 
 .site-container #why-chose-us .heading {
@@ -209,7 +253,6 @@ body .navbar .nav-right button {
 
 .site-container #why-chose-us .sections .left {
   width: 50%;
-  background: blue;
 }
 
 .site-container #why-chose-us .sections .right {
@@ -217,7 +260,6 @@ body .navbar .nav-right button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background: red;
 }
 
 .site-container #why-chose-us .sections .right .heading {
@@ -241,9 +283,12 @@ body .navbar .nav-right button {
 }
 
 .site-container #why-chose-us .sections .right .description-cards-container .description-card {
-  background: green;
-  width: 100%;
-  height: 150px;
+  background: rgba(255, 255, 255, 0.247);
+  border-radius: 15px;
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+  width: 80%;
+  height: 170px;
   margin-left: 5vw;
 }
 /*# sourceMappingURL=style.css.map */
