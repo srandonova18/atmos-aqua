@@ -31,6 +31,18 @@ class ShipManager {
         }
     }
 
+    deleteShip = async function (shipName) {
+        try {
+            let pool = await this.#pool;
+            const request = await pool.request()
+                .input("ShipName",sql.NVarChar,shipName)
+                .query('DELETE FROM Ships WHERE Name = @ShipName');
+
+            console.log(request) ;               
+        } catch (err) {
+            console.log(err);
+        }
+    }
 };
 
 class UserManager {
