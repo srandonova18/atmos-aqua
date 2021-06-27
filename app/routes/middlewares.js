@@ -1,9 +1,10 @@
 const { DBM } = require('../src/DBAPI');
 const { userRoutes } = require('./utils');
 
-DBM.getUserById = (id) => {
-  return {role: 1};
-};
+// Function overwrite for testing purposes only.
+// DBM.getUserById = (id) => {
+//   return {role: 1};
+// };
 
 const redirectLogin = async (req, res, next) => {
   if (!req.session.userId) {
