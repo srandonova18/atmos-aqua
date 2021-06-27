@@ -344,7 +344,7 @@ class ContainerManager {
                 .query("SELECT Id FROM Containers");
 
             return containers.recordset;
-            
+
         } catch(err) {
             console.log(err);
         }
@@ -368,6 +368,18 @@ class CompanyManager {
                 .query('INSERT INTO Companies (Name) VALUES (@CompanyName)');
 
             console.log(request) ;               
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    getAllCompanies = async function () {
+        try {
+            let pool = await this.#pool;
+            const request = await pool.request()
+                .query('SELECT Name FROM Companies');
+            
+            return request.recordset;
         } catch (err) {
             console.log(err);
         }
