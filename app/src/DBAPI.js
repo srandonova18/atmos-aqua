@@ -57,6 +57,18 @@ class ShipManager {
             console.log(err);
         }
     }
+
+    getAllShips = async function() {
+        try {
+            let pool = await this.#pool;
+            const request = await pool.request()
+                .query('SELECT Name FROM Ships');
+ 
+            return request.recordset;        
+        } catch (err) {
+            console.log(err);
+        }
+    }
 };
 
 class UserManager {
