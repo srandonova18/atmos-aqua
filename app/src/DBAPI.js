@@ -130,6 +130,7 @@ class UserManager {
             .input("LastName",sql.NVarChar,user.lastName)
             .input("Role",sql.Int,user.role)
             .input("Password",sql.NVarChar,user.password)
+            .input("Email",sql.NVarChar,user.email)
             .output("UserId",sql.Int)
             .execute("CreateUser");
         
@@ -181,7 +182,7 @@ class UserManager {
         try {
             let pool = await this.#pool;
             let result = await pool.request()
-                .query("SELECT [FirstName],[MiddleName],[LastName],[Role] FROM Users")
+                .query("SELECT [FirstName],[MiddleName],[LastName],[Role],[Email] FROM Users")
             
             return result.recordset;
         } catch(err) {
@@ -206,6 +207,7 @@ class UserManager {
                 .input("MiddleName",sql.NVarChar,oldUser.middleName)
                 .input("LastName",sql.NVarChar,oldUser.lastName)
                 .input("Password",sql.NVarChar,oldUser.password)
+                .input("Email",sql.NVarChar,oldUser.email)
                 .input("Role",sql.Int,oldUser.role)
                 .input("UserId",sql.Int,userId)
                 .execute("UpdateUser")
