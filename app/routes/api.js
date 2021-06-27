@@ -63,10 +63,8 @@ router.post('/login', async (req, res) => {
     if (userId) {
       req.session.userId = userId;
 
-      const { role } = await DBM.getUserById(req.session.userId);
-      console.log(`req.session.userId=${req.session.userId}`);
-      console.log(`role:${role}`);
-      return res.redirect(userRoutes[role]);
+      const { Role } = await DBM.getUserById(req.session.userId);
+      return res.redirect(userRoutes[Role]);
     }
 
     return res.redirect('/');
@@ -76,12 +74,12 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   if (req.session.userId) {
-    const { role } = DBM.getUserById(req.session.userId);
+    const { Role } = DBM.getUserById(req.session.userId);
 
     const portId = await getPortIdByUserId(req.session.userId)
     const portName = await getPortName(portId);
 
-    if (userRoutes[role].endsWith('Admin')) {
+    if (userRoutes[Role].endsWith('Admin')) {
       DBM.createUser({
         firstName: req.body.firstName,
         middleName: req.body.middleName,
