@@ -93,6 +93,8 @@ router.post('/register', async (req, res) => {
       portName);
     }
   }
+
+  res.redirect('/admin');
 });
 
 router.post('/logout', (req, res) => {
