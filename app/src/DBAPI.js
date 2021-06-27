@@ -396,6 +396,19 @@ class CompanyManager {
             console.log(err);
         }
     }
+
+    updateCompanyName = async function(oldName, newName) {
+        try {
+            let pool = await this.#pool;
+            await pool.request()
+                .input("OldName",sql.NVarChar,oldName)
+                .input("NewName",sql.NVarChar,newName)
+                .query('UPDATE Companies SET Name = @NewName WHERE Name like @OldName');
+            
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 class ShipmentManager {
