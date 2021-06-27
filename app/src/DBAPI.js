@@ -93,6 +93,34 @@ class UserManager {
         }
     }
 
+    getPortName = async function (portId) {
+        try {
+            let pool = await this.#pool;
+            const result = await pool.request()
+                .input("Id",sql.Int,portId)
+                .query("SELECT Name FROM Ports WHERE Id = @Id");
+
+            return result.recordset[0].Name;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    getPortIdByUserId = async function (userId) {
+        try {
+            let pool = await this.#pool;
+            const result = await pool.request()
+                .input("UserId",sql.Int,userId)
+                .query("SELECT PortId FROM PortsUsers WHERE UserId = @UserId");
+
+            if(result.rowsAffected[0])
+                return result.recordset[0].PortId;
+            return 0;
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     #inputUserData = async function(user)
     {
         let pool = await this.#pool;
@@ -619,13 +647,47 @@ class ShipmentManager {
         }
     }
 
-    getShipmentFromPort = async function(portName) {
+    #getContainersFromShipmentId = async function(shipmentId) {
+        try {
+            let pool = await this.#pool;
+            let containers = [];
+            
+            let request = await pool.request()
+                .input("ShipmentId",sql.Int,shipmentId)
+                .query("SELECT Id,ShipmentId,ContainerId FROM ContainersShipments WHERE ShipmentId = @ShipmentId");
+            
+            for(let record of request.recordset) {
+                let obj = {id: -1,goods: []};
+                obj.id = record.ContainerId;
+                containers.push(obj);
+            }
+
+            return containers;
+
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    #getGoodsFromContainer= async function (containerId) {
+        try {
+            let pool = await this.#pool;
+            let goods = [];
+
+            let results = await pool.request()
+                .input()
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    getShipmentFromPort = async function(portName,shipmentId) {
         try {
 
             let pool = await this.#pool;
             let portId = await this.#getPortId(portName);
-            let shipment = await this.#getShipmentInformation()
-            //get records from said shipment
+            let shipment = await this.#getShipmentInformation(shipmentId);
+            shipment.containers = await this.#getContainersFromShipmentId(shipmentId);
             //get goods from said records
         } catch(err) {
             console.log(err);
