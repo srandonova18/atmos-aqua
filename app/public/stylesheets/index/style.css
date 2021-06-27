@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -14,8 +17,131 @@ body {
   overflow-x: hidden;
 }
 
+body .navbar {
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: space-between;
+      -ms-flex-align: space-between;
+          align-items: space-between;
+  color: white;
+  font-size: .9rem;
+  font-weight: bolder;
+}
+
+body .navbar .nav-left {
+  width: 50%;
+}
+
+body .navbar .nav-left ul {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  list-style: none;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body .navbar .nav-right {
+  position: relative;
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body .navbar .nav-right button {
+  position: absolute;
+  right: 5%;
+  padding: 7px 30px;
+  border: none;
+  border-radius: 2px;
+}
+
 .site-container .background-gradient {
   background-image: url("../../images/mainPageBg.png");
+}
+
+.site-container #home .content-container {
+  position: absolute;
+  width: 60%;
+  height: 100%;
+}
+
+.site-container #home .content-container .content {
+  position: absolute;
+  top: 20%;
+  left: 15%;
+  text-align: left;
+  color: white;
+}
+
+.site-container #home .content-container .content h1 {
+  font-family: 'Lato', sans-serif;
+  font-size: 4.5rem;
+  margin-bottom: 10px;
+}
+
+.site-container #home .content-container .content h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.site-container #home .content-container .content p {
+  width: 45%;
+  margin-bottom: 50px;
+}
+
+.site-container #home .content-container .content .try-app-button {
+  padding: 20px 50px;
+}
+
+.site-container #home .home-img-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.site-container #home .home-img-container .harbour {
+  position: absolute;
+  left: 35%;
+  top: 25%;
+}
+
+.site-container #home .home-img-container .harbour img {
+  height: 500px;
+}
+
+.site-container #home .home-img-container .ship {
+  position: absolute;
+  left: 52%;
+  top: 42%;
+}
+
+.site-container #home .home-img-container .ship img {
+  height: 250px;
 }
 
 .site-container #about {
@@ -36,7 +162,7 @@ body {
 }
 
 .site-container #about .cards-container {
-  width: 50%;
+  width: 60%;
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;

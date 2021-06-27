@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+
 *{
     margin: 0;
     padding: 0;
@@ -12,12 +17,118 @@ section{
 
 body{
     overflow-x: hidden;
+
+    .navbar{
+        top: 0;
+        position: absolute;
+        width: 100%;
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        align-items: space-between;
+        color: white;
+        font-size: .9rem;
+        font-weight: bolder;
+
+        .nav-left{
+            width: 50%;
+
+            ul{
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                align-items: center;
+                list-style: none;
+                font-family: 'Open Sans', sans-serif;
+            }
+        }
+
+        .nav-right{
+            position: relative;
+            width: 50%;
+            display: flex;
+            align-items: center;
+
+            button{
+                position: absolute;
+                right: 5%;
+                padding: 7px 30px;
+                border: none;
+                border-radius: 2px;
+            }
+        }
+    }
 }
 
 .site-container{
 
     .background-gradient{
         background-image: url('../../images/mainPageBg.png');
+    }
+
+    #home{
+
+        .content-container{
+            position: absolute;
+            width:60%;
+            height: 100%;
+
+            .content{
+                position: absolute; 
+                top: 20%;
+                left: 15%;
+                text-align: left;
+                color: white;
+
+                h1{
+                    font-family: 'Lato', sans-serif;
+                    font-size: 4.5rem;
+                    margin-bottom: 10px;
+                }
+
+                h3{
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 1.2rem;
+                    margin-bottom: 30px;
+                }
+
+                p{
+                    width: 45%;
+                    margin-bottom: 50px;
+                }
+
+                .try-app-button{
+                    padding: 20px 50px;
+                }
+            }
+        }
+
+        .home-img-container{
+            position: relative;
+            width:100%;
+            height:100%;
+
+            .harbour{
+                position: absolute;
+                left: 35%;
+                top:25%;
+
+                img{
+                    height: 500px;
+                }
+            }
+
+            .ship{
+                position: absolute;
+                left:52%;
+                top:42%;
+
+                img{
+                    height: 250px;
+                }
+            }
+        }
     }
 
     #about{
@@ -29,7 +140,7 @@ body{
       height: 75vh;
 
         .cards-container{
-            width: 50%;
+            width: 60%;
             height: 100%;
             display: flex;
             flex-direction: row;
