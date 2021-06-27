@@ -20,9 +20,19 @@
         </div>
 
         <div class="nav-right">
-            <button>Log in</button>
+            <button class="login-button">Log in</button>
         </div>
     </nav>
+
+    <div class="form-container">
+        <div class="form-box">
+            <form class="logi-form" method="post" action="/api/login">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="submit">
+            </form>
+        </div>
+    </div>
 
     <div class="site-container">
 
@@ -114,6 +124,8 @@
             <h1>Phon</h1>
         </section>
     </div>
+
+    <script src="javascripts/loginManager.js"></script>
     
 </body>
 </html>
