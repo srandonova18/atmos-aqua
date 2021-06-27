@@ -10,6 +10,10 @@ section {
   color: black;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .site-container .background-gradient {
   background-image: url("../../images/mainPageBg.png");
 }
@@ -28,6 +32,7 @@ section {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  height: 75vh;
 }
 
 .site-container #about .cards-container {
@@ -48,9 +53,10 @@ section {
 }
 
 .site-container #about .cards-container .card {
-  height: 350px;
-  width: 250px;
+  height: 280px;
+  width: 300px;
   background: red;
+  border-radius: 15px;
 }
 
 .site-container #why-chose-us .heading {
