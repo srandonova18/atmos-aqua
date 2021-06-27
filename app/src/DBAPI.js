@@ -31,6 +31,44 @@ class ShipManager {
         }
     }
 
+    deleteShip = async function (shipName) {
+        try {
+            let pool = await this.#pool;
+            const request = await pool.request()
+                .input("ShipName",sql.NVarChar,shipName)
+                .query('DELETE FROM Ships WHERE Name = @ShipName');
+
+            console.log(request) ;               
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    updateShipName = async function (shipName,newName) {
+        try {
+            let pool = await this.#pool;
+            const request = await pool.request()
+                .input("ShipName",sql.NVarChar,shipName)
+                .input("NewName",sql.NVarChar,newName)
+                .query('UPDATE Ships SET Name = @NewName WHERE Name = @ShipName');
+
+            console.log(request) ;               
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    getAllShips = async function() {
+        try {
+            let pool = await this.#pool;
+            const request = await pool.request()
+                .query('SELECT Name FROM Ships');
+ 
+            return request.recordset;        
+        } catch (err) {
+            console.log(err);
+        }
+    }
 };
 
 class UserManager {
@@ -77,6 +115,18 @@ class UserManager {
                 .input("PortId",sql.Int,portId)
                 .input("UserId",sql.Int,userId)
                 .query("INSERT INTO PortsUsers (PortId, UserId) VALUES (@PortId, @UserId)")
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    getAllUsers = async function () {
+        try {
+            let pool = await this.#pool;
+            let result = await pool.request()
+                .query("SELECT [FirstName],[MiddleName],[LastName],[Role] FROM Users")
+            
+            return result.recordset;
         } catch(err) {
             console.log(err);
         }
