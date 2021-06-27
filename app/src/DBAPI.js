@@ -43,6 +43,20 @@ class ShipManager {
             console.log(err);
         }
     }
+
+    updateShipName = async function (shipName,newName) {
+        try {
+            let pool = await this.#pool;
+            const request = await pool.request()
+                .input("ShipName",sql.NVarChar,shipName)
+                .input("NewName",sql.NVarChar,newName)
+                .query('UPDATE Ships SET Name = @NewName WHERE Name = @ShipName');
+
+            console.log(request) ;               
+        } catch (err) {
+            console.log(err);
+        }
+    }
 };
 
 class UserManager {
