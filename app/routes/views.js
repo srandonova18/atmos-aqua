@@ -21,4 +21,8 @@ router.get('/agent', /* redirectLogin, */ function(req, res, next) {
   res.render('agent');
 });
 
+router.get('/create-port', function(req, res, next) {
+  res.render('create-port');
+});
+
 module.exports = router;
