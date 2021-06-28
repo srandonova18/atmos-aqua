@@ -49,6 +49,14 @@ section{
     }
 }
 
+.form-bg-blur-animation{
+    animation: 0.8s ease 0s 1 normal forwards running blurFormBackground;
+}
+
+.form-enter-animation{
+    animation: 2s cubic-bezier(0.075, 0.82, 0.165, 1) .5s 1 normal forwards running loginFormEnter;
+}
+
 body{
     overflow-x: hidden;
 
@@ -102,7 +110,7 @@ body{
         position: absolute;
         width: 100vw;
         height: 100vh;
-        z-index: 1000;
+        z-index: 99;
         align-items: center;
         justify-content: center;
         display: none;
@@ -114,10 +122,12 @@ body{
             position: fixed;
             width: 400px;
             height: 300px;
-            background: rgba(255, 255, 255, 0.26);
+            background: rgba(255, 255, 255, 0.164);
             border-radius: 15px;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
             border: 1px white solid;
+            z-index: 100;
+            opacity: 0;
 
             h1{
                 color: white;
@@ -324,4 +334,29 @@ body{
     }
 }
 
+@keyframes blurFormBackground{
+    0%{
+        backdrop-filter: blur(0px);
+    }
 
+    100%{
+        backdrop-filter: blur(20px);
+    }
+}
+
+@keyframes loginFormEnter{
+    0%{
+        transform: rotateX(-18deg);
+        opacity: 0;
+        margin-bottom: 60px;
+        backdrop-filter: blur(0px);
+        box-shadow: rgba(22, 31, 39, 0.42) 0px 60px 123px -25px;
+    }
+
+    100%{
+        transform: rotateX(0);
+        opacity: 1;
+        margin-bottom: 0;
+        backdrop-filter: blur(30px);
+    }
+}
