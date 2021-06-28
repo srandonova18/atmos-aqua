@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://im0-tub-ru.yandex.net/i?id=3122c5a7a2d3a3212bb1afcacb70c768-sr&n=13" width="200" height="200" alt="some_text" ></p>
+<img src="https://cdn.discordapp.com/attachments/858627277348798495/859156691505774642/Atmos-logo.png" alt="some_text" ></p>
 
 <h2 align="center">ATMOS</h2>
 
@@ -31,11 +31,17 @@ Technologies we used:
 * SCSS
 * EJS
 
+---
+
+* Visual Studio Code
+* Adobe Photoshop
+* SQL Server Management Studio
+
 
 ## Our Team
 
 - Stanislava Andonova (Scrum trainer)
-- Christian Milanov (Back-end developer)
+- Kristian Milanov (Back-end developer)
 - Nikola Peshev (Back-end developer)
 - Maria Ukrainska (Back-end developer)
 - Valery Ivanov (Front-end developer)
