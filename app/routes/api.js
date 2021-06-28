@@ -1,6 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-const { redirectLogin } = require('./middlewares');
+const { redirectLogin, adminOnly } = require('./middlewares');
 // const fetch = require('node-fetch');
 const router = express.Router();
 const { DBM } = require('../src/DBAPI');
@@ -18,22 +18,6 @@ router.get('/login', (req, res) => {
     <form method='post' action='/api/login'>
       <input type='email' name='email' placeholder='Email' required />
       <input type='password' name='password' placeholder='Password' required />
-      <input type='submit' />
-    </form>
-  `)
-});
-
-router.get('/register', (req, res) => {
-  console.log('here');
-  res.send(`
-    <h1>Register here please</h1>
-    <form method='post' action='/api/register'>
-      <input name='firstName' type='text' placeholder='First name' required />
-      <input name='middleName' type='text' placeholder='Middle name' required />
-      <input name='lastName' type='text' placeholder='Last name' required />
-      <input name='email' type='email' placeholder='Email' required />
-      <input name='role' type='number' required />
-      <input name='password' type='password' requred />
       <input type='submit' />
     </form>
   `)
@@ -118,6 +102,41 @@ router.post('/register-port', async (req, res) => {
   const { Id } = await DBM.getUserByEmail(email);
 
   req.session.userId = Id;
+
+  res.redirect('/admin');
+});
+
+router.get('/add-user', adminOnly, async (req, res) => {
+  res.send(`
+    <h1>Add user</h1>
+    <form method='post' action='/api/add-user'>
+      <input name='firstName' type='text' placeholder='First name' required />
+      <input name='middleName' type='text' placeholder='Middle name' required />
+      <input name='lastName' type='text' placeholder='Last name' required />
+      <input name='email' type='email' placeholder='Email' required />
+      <input name='role' type='number' placeholder='2' required />
+      <input name='password' type='password' placeholder='password' required />
+
+      <input type='submit' />
+    </form>
+  `);
+});
+
+router.post('/add-user',adminOnly , async (req, res) => {
+  const portId = await DBM.getPortIdByUserId(req.session.userId);
+  const portName = await DBM.getPortName(portId);
+
+  console.log(`sessId: ${req.session.userId}`);
+  console.log(`portName: ${portName}`);
+
+  DBM.createUser({
+    firstName: req.body.firstName,
+    middleName: req.body.middleName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    role: req.body.role,
+    password: req.body.password
+  }, portName);
 
   res.redirect('/admin');
 });
