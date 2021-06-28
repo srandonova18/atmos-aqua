@@ -6,19 +6,19 @@ const { redirectLogin } = require('./middlewares')
 
 
 router.get('/', function(req, res, next) {
-  res.render('index', {title: "Website"});
+  res.render('index');
 });
 
 router.get('/admin', redirectLogin, function(req, res, next) {
-  res.send('admin')
+  res.render('admin');
 });
 
 router.get('/worker', redirectLogin, function(req, res, next) {
-  res.send('worker')
+  res.render('worker');
 });
 
 router.get('/agent', redirectLogin, function(req, res, next) {
-  res.send('agent')
+  res.render('agent');
 });
 
 module.exports = router;
