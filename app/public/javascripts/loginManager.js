@@ -1,8 +1,17 @@
 const loginButton = document.querySelector('.login-button');
 const loginForm = document.querySelector('.login-form');
+const loginFormContainer = document.querySelector('.form-container');
+let formIsVisible = false;
 
 loginButton.addEventListener('click', () => {
-    console.log("login yes");
+    if(!formIsVisible)
+    {
+        formIsVisible = true;
+        loginFormContainer.style.display = 'block';
+    } else if(formIsVisible) {
+        formIsVisible = false;
+        loginFormContainer.style.display = 'none';
+    }
 });
 
 loginForm.addEventListener('submit', (e) => {

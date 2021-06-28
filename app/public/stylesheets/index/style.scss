@@ -18,6 +18,37 @@ section{
     color: black;
 }
 
+.input-field{
+    width: 60%;
+    margin-bottom: 15px;
+    outline:none;
+    padding: 1em 1.8em;
+    border: 1px rgba(255, 255, 255, 0.342) solid;
+    border-radius: 15px;
+    background:rgba(255, 255, 255, 0.151);
+    backdrop-filter: blur(20px);
+    color:white;
+    transition: .2s;
+
+    &:nth-child(1){
+        margin-top: 50px;
+    }
+
+    &:nth-child(2){
+        margin-bottom: 40px;
+    }
+
+    &::placeholder{
+        color:#9798b1;
+    }
+
+    &:focus{
+        background:rgba(20, 5, 61, 0.301);
+        border-color:rgb(255, 0, 140);
+        box-shadow: rgba(255, 0, 140, 0.349) 0px 0px 15px 0.5px ;
+    }
+}
+
 body{
     overflow-x: hidden;
 
@@ -32,7 +63,7 @@ body{
         color: white;
         font-size: .9rem;
         font-weight: bolder;
-        z-index: 5;
+        z-index: 100000000;
 
         .nav-left{
             width: 50%;
@@ -66,24 +97,54 @@ body{
     }
 
     .form-container{
-        position: sticky;
-        width: 100%;
-        height: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
         z-index: 1000;
         align-items: center;
         justify-content: center;
+        display: none;
 
         
         .form-box{
-            position: absolute;
-            width: 300px;
-            height: 200px;
-            background: white;
+            top: 40%;
+            left: 40%;
+            position: fixed;
+            width: 400px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.26);
+            border-radius: 15px;
+            backdrop-filter: blur(20px);
+            border: 1px white solid;
+
+            h1{
+                color: white;
+                font-family: 'Poppins';
+                margin-left: 160px;
+            }
 
             .login-form{
                 display: flex;
                 flex-direction: column;
-                justify-content: space-between;
+                align-items: center;
+
+                .login-submit{
+                    padding: 1em 8em;
+                    background: linear-gradient(to left, #28e8ae, #28b6e8 );
+                    outline: none;
+                    border:none;
+                    border-radius: 15px;
+                    color: white;
+                    box-shadow: rgba(1, 12, 112, 0.349) 0px 0px 15px 0.5px;
+                    cursor: pointer;
+                    transition: .2s;
+
+                    &:hover{
+                        box-shadow: none;
+                    }
+                }
             }
         }
     }
@@ -175,16 +236,6 @@ body{
 
                 img{
                     height: 500px;
-                }
-            }
-
-            .ship{
-                position: absolute;
-                left:52%;
-                top:42%;
-
-                img{
-                    height: 250px;
                 }
             }
         }
