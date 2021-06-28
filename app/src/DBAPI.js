@@ -380,6 +380,19 @@ class PortManager {
         const portId = await this.#namePort(portObj);
         this.#insertPortCoordinates(portObj, portId);
     }
+
+    updatePortName= async function(portId,newName) {
+        try {
+            let pool = await this.#pool;
+            await pool.request()
+                .input("PortId",sql.Int,portId)
+                .input("NewName",sql.NVarChar,newName)
+                .query("UPDATE Ports SET Name = @NewName WHERE Id = @PortId")
+            
+        } catch(err) {
+            console.log(err);
+        }
+    }
 }
 
 class ContainerManager {
