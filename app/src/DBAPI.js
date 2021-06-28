@@ -244,6 +244,22 @@ class UserManager {
             console.log(err);
         }
     }
+
+    deleteUser = async function(userId) {
+        try {
+            let pool = await this.#pool;
+            console.log(await pool.request()
+                .input("UserId",sql.Int,userId)
+                .query("DELETE FROM PortsUsers WHERE UserId like @UserId"))
+
+            console.log(await pool.request()
+                .input("UserId",sql.Int,userId)
+                .query("DELETE FROM Users WHERE Id like @UserId"))
+
+        } catch(err) {
+            console.log(err);
+        }
+    }
 }
 
 class PortManager {
@@ -592,25 +608,6 @@ class ShipmentManager {
             console.log(err);
         }
     }
-
-    // let shpmt = {
-    //     portId: 1,
-    //     shipId: 1,
-    //     companySender: "Kolegata",
-    //     companyReciever: "Paulbata",
-    //     containers: [
-    //         {id:1,goods: [ 
-    //             {id:1, name:"alabala",weight:123,price:452,description:"desc"},
-    //             {id:2, name:"cursed",weight:321,price:452,description:"desc"},
-    //             {id:3, name:"test",weight:521,price:632,description:"desc"}
-    //         ]},
-    //         {id:2, goods: [
-    //             {id:4, name:"test1",weight:123,price:452,description:"desc"},
-    //             {id:5, name:"test2",weight:321,price:452,description:"desc"},
-    //             {id:6, name:"test3",weight:521,price:632,description:"desc"}
-    //         ]}
-    //     ]
-    // };
 
     #getPortId = async function (portName) {
         try {
