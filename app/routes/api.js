@@ -1,6 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-const { redirectLogin, adminOnly } = require('./middlewares');
+const { redirectLogin, adminOnly, agentOnly } = require('./middlewares');
 const router = express.Router();
 const { DBM } = require('../src/DBAPI');
 const { userRoutes } = require('./utils');
@@ -88,6 +88,102 @@ router.get('/get-shipment', redirectLogin, async (req, res) => {
   const result = await DBM.getShipmentFromPort(portName, shipmentId);
 
   res.send(result);
+});
+
+router.post('/create-shipment', agentOnly, async (req, res) => {
+  const portId = await DBM.getPortIdByUserId(req.session.userId);  
+  const {
+    shipName,
+    companySender,
+    companyReceiver,
+    container1Id,
+    container2Id,
+    c1g1Name,
+    c1g1Weight,
+    c1g1Price,
+    c1g1Description,
+    c2g1Name,
+    c2g1Weight,
+    c2g1Price,
+    c2g1Description,
+    c2g2Name,
+    c2g2Weight,
+    c2g2Price,
+    c2g2Description,
+  } = req.body;
+
+  const containers = [ 
+    {
+      id: container1Id,
+      goods: [
+        {
+          name: c1g1Name,
+          weight: c1g1Weight,
+          price: c1g1Price,
+          description: c1g1Description,
+        },
+      ],
+    },
+    {
+      id: container2Id,
+      goods: [
+        {
+          name: c2g1Name,
+          weight: c2g1Weight,
+          price: c2g1Price,
+          description: c2g1Description,
+        },
+        {
+          name: c2g2Name,
+          weight: c2g2Weight,
+          price: c2g2Price,
+          description: c2g2Description,
+        },
+      ],
+    },
+  ];
+
+  // If ship doesn't exist 
+  // Just add it
+  let shipResult = await DBM.getShipId(shipName);
+  let shipId = shipResult.Id;
+
+  if (!shipId) {
+    shipResult = await DBM.createShip(shipName);
+    shipId = await DBM.getShipId(shipName);
+  } 
+
+  // If company doesn't exist
+  // Just add it
+  let companyResult = await DBM.getCompanyId(companySender);
+  let companyId = companyResult.Id;
+
+  if (!companyId) {
+    companyResult = await DBM.createCompany(companySender);
+    companyId = await DBM.getCompanyId(companySender);
+  }
+
+  const companySender = companyId;
+
+  companyResult = await DBM.getCompanyId(companyReceiver);
+  let companyId = companyResult.Id;
+
+  if (!companyId) {
+    companyResult = await DBM.createCompany(companyReceiver);
+    companyId = await DBM.getCompanyId(companyReceiver);
+  }
+
+  const companyReceiver = companyId;
+
+  await DBM.createShipment({
+    portId,
+    shipId,
+    companySender,
+    companyReceiver,
+    containers
+  });
+
+  res.redirect('/agent')
 });
 
 // FIXME: Remove temporary server-side rendered html webpages for testing
