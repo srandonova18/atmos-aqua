@@ -378,8 +378,12 @@ class PortManager {
 
     createPort = async function(portObj)
     {
+        try {
         const portId = await this.#namePort(portObj);
         this.#insertPortCoordinates(portObj, portId);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     updatePortName= async function(portId,newName) {
