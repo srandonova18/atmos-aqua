@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 // const fetch = require('node-fetch');
 const router = express.Router();
-const { redirectLogin } = require('./middlewares')
+const { redirectLogin, adminOnly } = require('./middlewares')
 
 
 router.get('/', function(req, res, next) {
