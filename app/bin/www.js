@@ -1,4 +1,5 @@
 let app = require('../app');
+require('dotenv').config();
 let http = require('http');
 
 let port = process.env.PORT || '3000';
