@@ -579,7 +579,7 @@ class ShipmentManager {
         this.#pool = pool || sql.connect(sqlConfig);
     }
 
-    #getCompanyId = async function(companyName) {
+    getCompanyId = async function(companyName) {
         try {
             let pool = await this.#pool;
             let result = await pool.request()
@@ -626,8 +626,8 @@ class ShipmentManager {
         try {
 
             let pool = await this.#pool;
-            let companyRecieverId = await this.#getCompanyId(shipment.companyReciever);
-            let companySenderId = await this.#getCompanyId(shipment.companySender);
+            let companyRecieverId = await getCompanyId(shipment.companyReciever);
+            let companySenderId = await getCompanyId(shipment.companySender);
             let result = await pool.request()
                 .input("PortId",sql.Int,shipment.portId)
                 .input("ShipId",sql.Int,shipment.shipId)
