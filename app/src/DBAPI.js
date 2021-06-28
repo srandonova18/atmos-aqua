@@ -72,6 +72,21 @@ class ShipManager {
             console.log(err);
         }
     }
+
+    getShipId = async function(shipName) {
+        try {
+            let pool = await this.#pool;
+            let result = await pool.request()
+                .input("ShipName",sql.NVarChar,shipName)
+                .query('SELECT Id FROM Ships WHERE Name = @ShipName');
+
+                console.log("DBAPI.js: Getting ship id by name: "+shipName);      
+                
+            return result.recordset[0].Id;
+        } catch (err) {
+            console.log(err);
+        }
+    }
 };
 
 class UserManager {
@@ -605,6 +620,7 @@ class ShipmentManager {
             console.log(err);
         }
     }
+
 
     #insertShipmentData = async function(shipment) {
         try {
