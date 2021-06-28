@@ -1,27 +1,25 @@
 const express = require('express');
 const session = require('express-session');
-// const fetch = require('node-fetch');
 const router = express.Router();
 const { redirectLogin, adminOnly } = require('./middlewares')
 
-
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   res.render('index');
 });
 
-router.get('/admin', /* redirectLogin, */ function(req, res, next) {
+router.get('/admin', redirectLogin, (req, res) => {
   res.render('admin');
 });
 
-router.get('/worker', /* redirectLogin, */ function(req, res, next) {
+router.get('/worker', redirectLogin, (req, res) => {
   res.render('worker');
 });
 
-router.get('/agent', /* redirectLogin, */ function(req, res, next) {
+router.get('/agent', redirectLogin, (req, res) => {
   res.render('agent');
 });
 
-router.get('/create-port', function(req, res, next) {
+router.get('/create-port', (req, res) => {
   res.render('create-port');
 });
 
