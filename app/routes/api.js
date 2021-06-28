@@ -92,7 +92,7 @@ router.get('/get-shipment', redirectLogin, async (req, res) => {
 
 router.post('/create-shipment', agentOnly, async (req, res) => {
   const portId = await DBM.getPortIdByUserId(req.session.userId);  
-  const {
+  let {
     shipName,
     companySender,
     companyReceiver,
@@ -146,7 +146,7 @@ router.post('/create-shipment', agentOnly, async (req, res) => {
   // If ship doesn't exist 
   // Just add it
   let shipResult = await DBM.getShipId(shipName);
-  let shipId = shipResult.Id;
+  let shipId = shipResult;
 
   if (!shipId) {
     shipResult = await DBM.createShip(shipName);
@@ -156,24 +156,32 @@ router.post('/create-shipment', agentOnly, async (req, res) => {
   // If company doesn't exist
   // Just add it
   let companyResult = await DBM.getCompanyId(companySender);
-  let companyId = companyResult.Id;
+  let companyId = companyResult;
 
   if (!companyId) {
     companyResult = await DBM.createCompany(companySender);
     companyId = await DBM.getCompanyId(companySender);
   }
 
-  const companySender = companyId;
+  companySender = companyId;
 
   companyResult = await DBM.getCompanyId(companyReceiver);
-  let companyId = companyResult.Id;
+  companyId = companyResult;
 
   if (!companyId) {
     companyResult = await DBM.createCompany(companyReceiver);
     companyId = await DBM.getCompanyId(companyReceiver);
   }
 
-  const companyReceiver = companyId;
+  companyReceiver = companyId;
+  
+  console.log({
+    portId,
+    shipId,
+    companySender,
+    companyReceiver,
+    containers
+  });
 
   await DBM.createShipment({
     portId,

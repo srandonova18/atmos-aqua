@@ -8,8 +8,26 @@
 </head>
 <body>
     <h1>Agent</h1>
-    <form>
-        
+    <form method='post' action='/api/create-shipment'>
+        <input name='shipName' type='text' placeholder='shipName' />
+        <input name='companySender' type='text' placeholder='companySender' />
+        <input name='companyReceiver' type='text' placeholder='companyReceiver' />
+        <input name='container1Id' type='text' placeholder='container1Id' />
+        <input name='container2Id' type='text' placeholder='container2Id' />
+        <input name='c1g1Name' type='text' placeholder='c1g1Name' />
+        <input name='c1g1Weight' type='text' placeholder='c1g1Weight' />
+        <input name='c1g1Price' type='text' placeholder='c1g1Price' />
+        <input name='c1g1Description' type='text' placeholder='c1g1Description' />
+        <input name='c2g1Name' type='text' placeholder='c2g1Name' />
+        <input name='c2g1Weight' type='text' placeholder='c2g1Weight' />
+        <input name='c2g1Price' type='text' placeholder='c2g1Price' />
+        <input name='c2g1Description' type='text' placeholder='c2g1Description' />
+        <input name='c2g2Name' type='text' placeholder='c2g2Name' />
+        <input name='c2g2Weight' type='text' placeholder='c2g2Weight' />
+        <input name='c2g2Price' type='text' placeholder='c2g2Price' />
+        <input name='c2g2Description' type='text' placeholder='c2g2Description' />
+
+        <input type='submit' />
     </form>
 </body>
 </html>
