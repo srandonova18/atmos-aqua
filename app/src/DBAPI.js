@@ -7,6 +7,7 @@ let sqlConfig = {
   password: connInfo.PASSWORD,
   server: connInfo.SERVER,
   database: connInfo.DB,
+  port: connInfo.PORT,
   trustServerCertificate: true
 };
 
