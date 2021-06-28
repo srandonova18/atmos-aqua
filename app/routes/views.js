@@ -9,15 +9,15 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-router.get('/admin', redirectLogin, function(req, res, next) {
+router.get('/admin', /* redirectLogin, */ function(req, res, next) {
   res.render('admin');
 });
 
-router.get('/worker', redirectLogin, function(req, res, next) {
+router.get('/worker', /* redirectLogin, */ function(req, res, next) {
   res.render('worker');
 });
 
-router.get('/agent', redirectLogin, function(req, res, next) {
+router.get('/agent', /* redirectLogin, */ function(req, res, next) {
   res.render('agent');
 });
 
