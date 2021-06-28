@@ -27,7 +27,7 @@ class ShipManager {
                 .input("ShipName",sql.NVarChar,shipName)
                 .query('INSERT INTO Ships (Name) VALUES (@ShipName)');
 
-            console.log(request) ;               
+            console.log("DBAPI.js: Add ship with name "+shipName);               
         } catch (err) {
             console.log(err);
         }
@@ -40,7 +40,7 @@ class ShipManager {
                 .input("ShipName",sql.NVarChar,shipName)
                 .query('DELETE FROM Ships WHERE Name = @ShipName');
 
-            console.log(request) ;               
+                console.log("DBAPI.js: Deleted ship with name: "+shipName);               
         } catch (err) {
             console.log(err);
         }
@@ -54,7 +54,7 @@ class ShipManager {
                 .input("NewName",sql.NVarChar,newName)
                 .query('UPDATE Ships SET Name = @NewName WHERE Name = @ShipName');
 
-            console.log(request) ;               
+                console.log("DBAPI.js: Update old ship: "+shipName+" and replaced it with: "+newName);               
         } catch (err) {
             console.log(err);
         }
@@ -65,7 +65,8 @@ class ShipManager {
             let pool = await this.#pool;
             const request = await pool.request()
                 .query('SELECT Name FROM Ships');
- 
+            
+            console.log("DBAPI.js: Getting all ships from DB");  
             return request.recordset;        
         } catch (err) {
             console.log(err);
@@ -88,6 +89,7 @@ class UserManager {
                 .input("Name",sql.NVarChar,portName)
                 .query("SELECT Id FROM Ports WHERE Name = @Name");
 
+            console.log("DBAPI.js: Getting Id of port: "+portName);  
             return result.recordset[0].Id;
         } catch(err) {
             console.log(err);
@@ -101,6 +103,7 @@ class UserManager {
                 .input("Id",sql.Int,portId)
                 .query("SELECT Name FROM Ports WHERE Id = @Id");
 
+            console.log("DBAPI.js: Getting name of port with id: "+portId);  
             return result.recordset[0].Name;
         } catch(err) {
             console.log(err);
@@ -114,6 +117,7 @@ class UserManager {
                 .input("UserId",sql.Int,userId)
                 .query("SELECT PortId FROM PortsUsers WHERE UserId = @UserId");
 
+            console.log("DBAPI.js: Getting portId by userId: "+userId);  
             if(result.rowsAffected[0])
                 return result.recordset[0].PortId;
             return 0;
@@ -135,6 +139,7 @@ class UserManager {
             .output("UserId",sql.Int)
             .execute("CreateUser");
         
+        console.log("DBAPI.js: Created new user: "+email);  
         const { UserId } = result.output;
         return UserId;
     }
@@ -146,6 +151,8 @@ class UserManager {
                 .input("PortId",sql.Int,portId)
                 .input("UserId",sql.Int,userId)
                 .query("INSERT INTO PortsUsers (PortId, UserId) VALUES (@PortId, @UserId)")
+            
+            console.log("DBAPI.js: Linking port: "+portId+" with user: "+userId);  
         } catch(err) {
             console.log(err);
         }
@@ -160,6 +167,7 @@ class UserManager {
                 .input("LastName",sql.NVarChar,user.lastName)
                 .query("SELECT [Id],[FirstName],[MiddleName],[LastName],[Role],[Email] FROM Users")
             
+            console.log("DBAPI.js: Getting user by names: "+user.firstName+" "+user.middleName+" "+user.lastName);  
             return result.recordset[0];
         } catch(err) {
             console.log(err);
@@ -173,6 +181,7 @@ class UserManager {
                 .input("Email",sql.NVarChar,email)
                 .query("SELECT [Id],[FirstName],[MiddleName],[LastName],[Role],[Email] FROM Users WHERE Email like @Email")
             
+            console.log("DBAPI.js: Getting user by email: "+email);  
             return result.recordset[0];
         } catch(err) {
             console.log(err);
@@ -186,6 +195,7 @@ class UserManager {
                 .input("UserId",sql.Int,id)
                 .query("SELECT [FirstName],[MiddleName],[LastName],[Role],[Email] FROM Users WHERE Id = @UserId")
             
+            console.log("DBAPI.js: Getting user by id: "+id);  
             return result.recordset[0];
         } catch(err) {
             console.log(err);
@@ -198,6 +208,7 @@ class UserManager {
             let result = await pool.request()
                 .query("SELECT [FirstName],[MiddleName],[LastName],[Role],[Email] FROM Users")
             
+            console.log("DBAPI.js: Getting all users from DB");  
             return result.recordset;
         } catch(err) {
             console.log(err);
@@ -226,6 +237,7 @@ class UserManager {
                 .input("UserId",sql.Int,userId)
                 .execute("UpdateUser")
             
+            console.log("DBAPI.js: Updating user: "+oldUser.email);  
             return result.recordset;
         } catch(err) {
             console.log(err);
@@ -237,6 +249,8 @@ class UserManager {
             let portId = await this.#getPortId(portName);
             let userId = await this.#inputUserData(user);
             await this.#linkUserAndPort(portId,userId);
+
+            console.log("DBAPI.js: Creating new user: "+email+" in port: "+portName);  
         } catch(err) {
             console.log(err);
         }
@@ -251,6 +265,7 @@ class UserManager {
                 .input("Email",sql.NVarChar,email)
                 .query("SELECT Id FROM Users WHERE Password like @Password AND Email like @Email")
             
+                console.log("DBAPI.js: Checking if user: "+email+" exists");  
             if(result.rowsAffected[0])
                 return result.recordset[0].Id;
             return 0;
@@ -270,6 +285,7 @@ class UserManager {
                 .input("UserId",sql.Int,userId)
                 .query("DELETE FROM Users WHERE Id like @UserId"))
 
+            console.log("DBAPI.js: Delete user: "+userId);  
         } catch(err) {
             console.log(err);
         }
@@ -291,6 +307,7 @@ class PortManager {
                 .input("Name",sql.NVarChar,portName)
                 .query("SELECT Id FROM Ports WHERE Name = @Name");
 
+            console.log("DBAPI.js: Getting port: "+portName+" by id");  
             return result.recordset[0].Id;
         } catch(err) {
             console.log(err);
@@ -307,6 +324,7 @@ class PortManager {
                 .output("PortId",sql.Int)
                 .execute("CreatePort");
             
+                console.log("DBAPI.js: Giving a name to port: "+name);  
             const { PortId } = results.output;
             return PortId;
 
@@ -327,6 +345,7 @@ class PortManager {
                     .input("PortId",sql.Int,portId)
                     .execute("AddCoordinates");
             }
+            console.log("DBAPI.js: Inserted coordinates in port: "+portId);  
         } catch (err) {
             console.log(err);
         }
@@ -340,6 +359,7 @@ class PortManager {
                 .input("CoordinatesId",sql.Int,coordinatesId)
                 .query("Select [Lat],[Lng] FROM Coordinates WHERE Id = @CoordinatesId")
             
+            console.log("DBAPI.js: Getting coordinates...");  
             return result.recordset[0];
         } catch(err) {
             console.log(err);
@@ -351,7 +371,11 @@ class PortManager {
             let pool = await this.#pool;
             let result = await pool.request()
                 .query("SELECT * FROM Ports");
+
+            console.log("DBAPI.js: Getting all ports");  
+
             return result.recordset;
+
         } catch(err) {
             console.log(err);
         }
@@ -382,6 +406,7 @@ class PortManager {
                 data.push(tmp);
             }
 
+            console.log("DBAPI.js: Getting all ports' coordinates");  
             return data;
 
         } catch(err) {
@@ -394,6 +419,9 @@ class PortManager {
         try {
         const portId = await this.#namePort(portObj);
         this.#insertPortCoordinates(portObj, portId);
+
+        console.log("DBAPI.js: Creating port: "+portObj.name);  
+
         } catch(err) {
             console.log(err);
         }
@@ -406,7 +434,8 @@ class PortManager {
                 .input("PortId",sql.Int,portId)
                 .input("NewName",sql.NVarChar,newName)
                 .query("UPDATE Ports SET Name = @NewName WHERE Id = @PortId")
-            
+
+            console.log("DBAPI.js: Updating name of port: "+portId+" with new name: "+newName);  
         } catch(err) {
             console.log(err);
         }
@@ -427,6 +456,8 @@ class ContainerManager {
             await pool.request()
                 .input("ContainerId",sql.Int,containerId)
                 .query("INSERT INTO Containers (Id) VALUES (@ContainerId)");
+
+            console.log("DBAPI.js: Creating container: "+containerId);  
         } catch(err) {
             console.log(err);
         }
@@ -438,6 +469,8 @@ class ContainerManager {
             await pool.request()
                 .input("ContainerId",sql.Int,containerId)
                 .query("DELETE FROM Containers WHERE Id = @ContainerId");
+
+            console.log("DBAPI.js: Deleting container: "+containerId);  
         } catch(err) {
             console.log(err);
         }
@@ -449,6 +482,8 @@ class ContainerManager {
             let pool = await this.#pool;
             let containers = await pool.request()
                 .query("SELECT Id FROM Containers");
+
+            console.log("DBAPI.js: Getting all containers");  
 
             return containers.recordset;
 
@@ -474,7 +509,7 @@ class CompanyManager {
                 .input("CompanyName",sql.NVarChar,companyName)
                 .query('INSERT INTO Companies (Name) VALUES (@CompanyName)');
 
-            console.log(request) ;               
+            console.log("DBAPI.js: Creating company: "+companyName);               
         } catch (err) {
             console.log(err);
         }
@@ -486,6 +521,7 @@ class CompanyManager {
             const request = await pool.request()
                 .query('SELECT Name FROM Companies');
             
+            console.log("DBAPI.js: Getting all company names");  
             return request.recordset;
         } catch (err) {
             console.log(err);
@@ -499,6 +535,7 @@ class CompanyManager {
                 .input("CompanyName",sql.NVarChar,companyName)
                 .query('DELETE FROM Companies WHERE Name = @CompanyName');
             
+            console.log("DBAPI.js: Deleting company: "+companyName);  
         } catch (err) {
             console.log(err);
         }
@@ -512,6 +549,7 @@ class CompanyManager {
                 .input("NewName",sql.NVarChar,newName)
                 .query('UPDATE Companies SET Name = @NewName WHERE Name like @OldName');
             
+            console.log("DBAPI.js: Updating company: "+oldName+" with new name: "+newName);  
         } catch (err) {
             console.log(err);
         }
@@ -533,6 +571,7 @@ class ShipmentManager {
                 .input("CompanyName",sql.NVarChar,companyName)
                 .query("SELECT Id FROM Companies WHERE Name = @CompanyName");
 
+            console.log("DBAPI.js: Getting company: "+companyName);  
             return result.recordset[0].Id;
         } catch(err) {
             console.log(err);
@@ -546,6 +585,7 @@ class ShipmentManager {
                 .input("CompanyId",sql.NVarChar,companyId)
                 .query("SELECT Name FROM Companies WHERE Id = @CompanyId");
 
+            console.log("DBAPI.js: Getting company: "+companyId);  
             return result.recordset[0].Name;
         } catch(err) {
             console.log(err);
@@ -559,6 +599,7 @@ class ShipmentManager {
                 .input("ShipId",sql.NVarChar,shipId)
                 .query("SELECT Name FROM Ships WHERE Id = @ShipId");
 
+            console.log("DBAPI.js: Getting ship: "+shipId);  
             return result.recordset[0].Name;
         } catch(err) {
             console.log(err);
@@ -580,6 +621,7 @@ class ShipmentManager {
                 .output("ShipmentId",sql.Int)
                 .execute("CreateShipment")
 
+            console.log("DBAPI.js: Inserting shipment data: "+shipment);  
             return result.output.ShipmentId;
            
         } catch(err) {
@@ -596,6 +638,7 @@ class ShipmentManager {
                     .input("ShipmentId",sql.Int,shipmentId)
                     .query("INSERT INTO ContainersShipments (ShipmentId, ContainerId) VALUES (@ShipmentId, @ContainerId)")
             }
+            console.log("DBAPI.js: Inserting containers into shipment");  
         } catch(err) {
             console.log(err);
         }
@@ -623,6 +666,7 @@ class ShipmentManager {
                         .execute("CreateGood")
                 }
             }
+            console.log("DBAPI.js: Inserting goods into conainers");  
         } catch(err) {
             console.log(err);
         }
@@ -635,6 +679,7 @@ class ShipmentManager {
             await this.#insertContainersShipmentsData(shipment,shipmentId);
             await this.#insertGoodsData(shipment);
 
+            console.log("DBAPI.js: Creating shipment: "+shipment);  
         } catch(err) {
             console.log(err);
         }
@@ -648,6 +693,7 @@ class ShipmentManager {
                 .input("PortName",sql.NVarChar,portName)
                 .query("SELECT Id FROM Ports WHERE Name like @PortName")
 
+            console.log("DBAPI.js: Getting port: "+portName);  
             return results.recordset[0].Id;
         } catch(err) {
             console.log(err);
@@ -663,14 +709,15 @@ class ShipmentManager {
             let results = await pool.request()
                 .input("ShipmentId",sql.Int,shipmentId)
                 .query("SELECT [ShipId],[ContainerCount],[CompanyReciever],[CompanySender] FROM Shipments WHERE Id = @ShipmentId")
-            
 
-                shipment.shipId = await this.#getShipName(results.recordset[0].ShipId);
-                shipment.containerCount = results.recordset[0].ContainerCount;
-                shipment.companySender = await this.#getCompanyName(results.recordset[0].CompanySender);
-                shipment.companyReciever = await this.#getCompanyName(results.recordset[0].CompanyReciever);
+            shipment.shipId = await this.#getShipName(results.recordset[0].ShipId);
+            shipment.containerCount = results.recordset[0].ContainerCount;
+            shipment.companySender = await this.#getCompanyName(results.recordset[0].CompanySender);
+            shipment.companyReciever = await this.#getCompanyName(results.recordset[0].CompanyReciever);
 
-                return shipment;
+            console.log("DBAPI.js: Getting shipment information: "+shipmentId);  
+
+            return shipment;
 
         } catch(err) {
             console.log(err);
@@ -693,7 +740,8 @@ class ShipmentManager {
                 containersShipmentsIds.push(record.Id);
             }
 
-            
+            console.log("DBAPI.js: Getting containers from shipment: "+shipmentId);  
+
             return {containers, containersShipmentsIds};
 
         } catch(err) {
@@ -709,6 +757,7 @@ class ShipmentManager {
                 .input("ContainersShipmentsId",sql.Int,containersShipmentsId)
                 .query("SELECT Id, Name, Weight, Price, Description FROM Goods WHERE ContainersShipmentsId = @ContainersShipmentsId")
             
+            console.log("DBAPI.js: Getting goods from containers");  
             return results.recordset;
         } catch(err) {
             console.log(err);
@@ -736,6 +785,7 @@ class ShipmentManager {
                 }
             }
 
+            console.log("DBAPI.js: Getting shipemtn: "+shipmentId+" from port: "+portName);  
             return shipment;
 
         } catch(err) {
