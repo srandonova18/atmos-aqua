@@ -250,7 +250,7 @@ class UserManager {
             let userId = await this.#inputUserData(user);
             await this.#linkUserAndPort(portId,userId);
 
-            console.log("DBAPI.js: Creating new user: "+email+" in port: "+portName);  
+            console.log("DBAPI.js: Creating new user: "+user.email+" in port: "+portName);  
         } catch(err) {
             console.log(err);
         }
