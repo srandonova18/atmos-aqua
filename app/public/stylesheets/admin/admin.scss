@@ -1,4 +1,68 @@
 #map {
     width: 100%;
-    height: 100vh;
+    top: 7vh;
+    height: 80vh;
+    overflow-x: hidden;
+}
+
+.navbar{
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+    color: rgba(255, 255, 255, 0.329);
+    font-size: .9rem;
+    font-weight: bolder;
+    z-index: 1001;
+    backdrop-filter: blur(20px);
+
+    .nav-left{
+        width: 50%;
+        align-items: center;
+
+        ul{
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            list-style: none;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        button{
+            position: absolute;
+            display: flex;
+            top: 44%;
+            left: 3%;
+            padding: 7px 30px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+    }
+
+    .nav-right{
+        position: relative;
+        width: 50%;
+        top: 20%;
+        display: flex;
+        align-items: center;
+
+        button{
+            position: absolute;
+            right: 12%;
+            padding: 7px 30px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        p{
+            position: absolute;
+            right: 5%;
+        }
+    }
 }
