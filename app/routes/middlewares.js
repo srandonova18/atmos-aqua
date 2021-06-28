@@ -11,12 +11,10 @@ const redirectLogin = async (req, res, next) => {
     console.log(req.session.userId);
     res.redirect('/');
   } else {
-    // req.url
-
     let { Role } = await DBM.getUserById(req.session.userId);
     
-    console.log(`from middlewares.js: Role: ${Role}`);
-    console.log(`from middlewares.js: req.session.userId: ${req.session.userId}`);
+    // console.log(`from middlewares.js: Role: ${Role}`);
+    // console.log(`from middlewares.js: req.session.userId: ${req.session.userId}`);
 
     Role = Role - 1;
 
@@ -28,4 +26,20 @@ const redirectLogin = async (req, res, next) => {
   }
 };
 
-module.exports = { redirectLogin };
+const adminOnly = async (req, res, next) => {
+  if (!req.session.userId) {
+    return res.redirect('/');
+  } else {
+    let { Role } = await DBM.getUserById(req.session.userId);
+    // console.log(req.session.userId);
+    // console.log(Role);
+
+    if (Role === 1) {
+      next();
+    } else {
+      return res.redirect('/');
+    }
+  }
+};
+
+module.exports = { redirectLogin, adminOnly };
