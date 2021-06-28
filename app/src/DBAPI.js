@@ -158,7 +158,20 @@ class UserManager {
                 .input("FirstName",sql.NVarChar,user.firstName)
                 .input("MiddleName",sql.NVarChar,user.middleName)
                 .input("LastName",sql.NVarChar,user.lastName)
-                .query("SELECT [Id],[FirstName],[MiddleName],[LastName],[Role].[Email] FROM Users")
+                .query("SELECT [Id],[FirstName],[MiddleName],[LastName],[Role],[Email] FROM Users")
+            
+            return result.recordset[0];
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    getUserByEmail = async function (email)  {
+        try {
+            let pool = await this.#pool;
+            let result = await pool.request()
+                .input("Email",sql.NVarChar,email)
+                .query("SELECT [Id],[FirstName],[MiddleName],[LastName],[Role],[Email] FROM Users WHERE Email like @Email")
             
             return result.recordset[0];
         } catch(err) {
