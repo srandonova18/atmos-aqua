@@ -139,7 +139,7 @@ class UserManager {
             .output("UserId",sql.Int)
             .execute("CreateUser");
         
-        console.log("DBAPI.js: Created new user: "+email);  
+        console.log("DBAPI.js: Created new user: "+user.email);  
         const { UserId } = result.output;
         return UserId;
     }
