@@ -74,27 +74,50 @@ router.post('/login', async (req, res) => {
 
 });
 
-router.post('/register', async (req, res) => {
-  if (req.session.userId) {
-    let { Role } = await DBM.getUserById(req.session.userId);
-    Role = Role - 1;
+router.get('/register-port', async (req, res) => {
+  res.send(`
+    <h1>Register-port</h1>
+    <form method='post' action='/api/register-port'>
+      <input name='portName' type='text' placeholder='port name' required />
+      <input name='coordinates' type='text' placeholder='coords' required />
+      <input name='firstName' type='text' placeholder='First name' required />
+      <input name='middleName' type='text' placeholder='Middle name' required />
+      <input name='lastName' type='text' placeholder='Last name' required />
+      <input name='email' type='email' placeholder='Email' required />
+      <input name='password' type='password' placeholder='password' required />
 
-    const portId = await DBM.getPortIdByUserId(req.session.userId)
-    const portName = await DBM.getPortName(portId);
+      <input type='submit' />
+    </form>
+  `)
+});
 
-    if (userRoutes[Role].endsWith('admin')) {
+router.post('/register-port', async (req, res) => {
+  const {
+    portName,
+    coordinates,
+    firstName,
+    middleName,
+    lastName,
+    email,
+    password,
+  } = req.body;
 
-      DBM.createUser({
-        firstName: req.body.firstName,
-        middleName: req.body.middleName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        role: req.body.role,
-        password: req.body.password,
-      },
-      portName);
-    }
-  }
+  let role = 1;
+
+  await DBM.createPort({name: portName, coordinates: [{lat: 6, lng: 9}]});
+
+  await DBM.createUser({
+    firstName,
+    middleName,
+    lastName,
+    email,
+    role: 1,
+    password
+  }, portName);
+
+  const { Id } = await DBM.getUserByEmail(email);
+
+  req.session.userId = Id;
 
   res.redirect('/admin');
 });
