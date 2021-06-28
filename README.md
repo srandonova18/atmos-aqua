@@ -5,7 +5,7 @@
 
 <details open="open">
   <summary>Table of Contents</summary>
-  <ol>
+  <ol> 
     <li>
       <a href="#about-the-project">About the project</a>
     </li>
@@ -13,7 +13,7 @@
         <li><a href="#What-we-used-to-create-the-project">What we used to create the project</a></li>
     </ul> 
     <li>
-      <a href="#Our-team">Our team</a>
+      <a href="Our-team">Our team</a>
     </li>
    <li>
     <a href="#documentation-and-presentation">Documentation and Presentation</a></li>
@@ -48,3 +48,6 @@ Technologies we used:
 - Boris Savov (Designer)
 
 ## Documentation and Presentation
+
+* [Documentation](https://codingburgas-my.sharepoint.com/:b:/g/personal/srandonova18_codingburgas_bg/EcrnuxE5g8VNi02toLId24YBFU7a40snz0zM5hhHBPuwmw?e=L2JRsX)
+* [Presentation](https://codingburgas-my.sharepoint.com/:p:/g/personal/srandonova18_codingburgas_bg/EelFc72L3qhDiVv4A6hnkpUBHijHaYq0Wgr1xKuxZlnw9w?e=ke12ZZ)
