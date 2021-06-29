@@ -8,10 +8,12 @@
 </head>
 <body>
     <h1>Worker</h1>
-    <form method='get' action='/api/get-shipment'>
-        <input name='shipmentId' type='text' placeholder='Shipment id' required/>
+    <form method='get' action='/api/get-shipment/'>
+        <input id='num' type='number' placeholder='Shipmentid' required />
 
-        <input type='submit' />
+        <input id='button' type='submit' />
     </form>
+
+    <script src="javascripts/workerForm.js"></script>
 </body>
 </html>
