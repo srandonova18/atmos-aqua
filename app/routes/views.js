@@ -23,4 +23,8 @@ router.get('/create-port', (req, res) => {
   res.render('create-port');
 });
 
+router.get('/shipment/:shipmentId', (req, res) => {
+  res.render('shipment', {shipmentId: req.params.shipmentId});
+});
+
 module.exports = router;

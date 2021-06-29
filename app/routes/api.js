@@ -85,13 +85,7 @@ router.get('/get-shipment/:shipmentId', /*redirectLogin,*/ async (req, res) => {
 
   const { shipmentId } = req.params;
 
-  console.log(req.session.userId);
-  console.log(portName, shipmentId);
-  console.log(req.params);
-
   const result = await DBM.getShipmentFromPort(portName, shipmentId);
-
-  console.log(result);
 
   res.send(result);
 });

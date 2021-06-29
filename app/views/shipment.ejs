@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atmos</title>
+</head>
+<body>
+  <h1>Shipment display</h1>
+  <h1>Shipment id: <span id='shipment-id'><%- shipmentId %></span></h1>
+
+  <div id='content'>
+
+  </div>
+
+  <script>
+    console.log('hi');
+
+    const shipmentId = document.querySelector('#shipment-id').innerHTML;
+    const contentCont = document.querySelector('#content');
+
+    (async function() {
+      let result = await fetch(`/api/get-shipment/${shipmentId}`, {method: 'get'});
+      let obj = await result.json();
+      
+      console.log(Object.keys(obj));
+    })();
+  </script>
+
+  <!-- <script src="javascripts/shipmentDisplayScript.js"></script> -->
+</body>
+</html>
