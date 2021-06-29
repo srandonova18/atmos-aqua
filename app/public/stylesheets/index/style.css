@@ -120,6 +120,14 @@ body .navbar .nav-left ul {
   font-family: 'Open Sans', sans-serif;
 }
 
+body .navbar .nav-left ul li, body .navbar .nav-left ul a {
+  text-decoration: none;
+}
+
+body .navbar .nav-left ul li:visited, body .navbar .nav-left ul a:visited {
+  color: white;
+}
+
 body .navbar .nav-right {
   position: relative;
   width: 50%;
@@ -312,12 +320,12 @@ body .form-container .form-box .login-form .login-submit:hover {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 75vh;
+  height: 100vh;
 }
 
 .site-container #about .about-heading {
   font-family: 'Poppins';
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   color: #14447a;
 }
 
@@ -336,6 +344,7 @@ body .form-container .form-box .login-form .login-submit:hover {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  z-index: 1001;
 }
 
 .site-container #about .cards-container .card {
@@ -363,27 +372,24 @@ body .form-container .form-box .login-form .login-submit:hover {
   margin-top: 70px;
 }
 
-.site-container .medal {
-  z-index: 1;
-}
-
 .site-container .medal img {
   margin-top: 50px;
   height: 150px;
+  z-index: -10;
 }
 
-.site-container #why-chose-us {
+.site-container #why-choose-us {
   background: linear-gradient(200deg, #172079 2%, #38afe1 100%);
 }
 
-.site-container #why-chose-us .heading {
+.site-container #why-choose-us .heading {
   height: 10%;
   color: white;
   font-family: 'Lato';
   font-size: 2rem;
 }
 
-.site-container #why-chose-us .sections {
+.site-container #why-choose-us .sections {
   width: inherit;
   height: 90%;
   display: -webkit-box;
@@ -397,20 +403,20 @@ body .form-container .form-box .login-form .login-submit:hover {
       align-self: bottom;
 }
 
-.site-container #why-chose-us .sections .left {
+.site-container #why-choose-us .sections .left {
   width: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.site-container #why-chose-us .sections .left .heading {
+.site-container #why-choose-us .sections .left .heading {
   position: absolute;
   left: 70%;
   color: white;
 }
 
-.site-container #why-chose-us .sections .left .description-cards-container {
+.site-container #why-choose-us .sections .left .description-cards-container {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -425,36 +431,45 @@ body .form-container .form-box .login-form .login-submit:hover {
       align-self: right;
 }
 
-.site-container #why-chose-us .sections .left .description-cards-container .description-card {
-  background: rgba(255, 255, 255, 0.247);
+.site-container #why-choose-us .sections .left .description-cards-container .description-card {
+  background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
   border-radius: 15px;
   -webkit-backdrop-filter: blur(20px);
           backdrop-filter: blur(20px);
   width: 80%;
   height: 170px;
   margin-left: 5vw;
-  border: 1px solid white;
 }
 
-.site-container #why-chose-us .sections .left .description-cards-container .description-card h1 {
+.site-container #why-choose-us .sections .left .description-cards-container .description-card h1 {
+  margin-top: 3%;
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
+  font-size: 1.5rem;
+  color: white;
 }
 
-.site-container #why-chose-us .sections .left .description-cards-container .description-card p {
+.site-container #why-choose-us .sections .left .description-cards-container .description-card p {
   font-family: 'Lato';
   font-weight: normal;
   font-size: 1.5rem;
   margin-top: 30px;
 }
 
-.site-container #why-chose-us .sections .right {
+.site-container #why-choose-us .sections .right {
   width: 50%;
 }
 
-.site-container #why-chose-us .sections .right .app {
+.site-container #why-choose-us .sections .right .app {
   position: absolute;
   right: -20%;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
+.site-container #why-choose-us .sections .right .app:hover {
+  cursor: pointer;
+  right: -19%;
 }
 
 @-webkit-keyframes blurFormBackground {

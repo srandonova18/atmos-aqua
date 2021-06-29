@@ -75,7 +75,6 @@ body{
 
         .nav-left{
             width: 50%;
-
             ul{
                 height: 100%;
                 display: flex;
@@ -84,6 +83,14 @@ body{
                 align-items: center;
                 list-style: none;
                 font-family: 'Open Sans', sans-serif;
+
+                li, a{
+                    text-decoration: none;
+
+                    &:visited{
+                        color: white;
+                    }
+                }
             }
         }
 
@@ -257,11 +264,11 @@ body{
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      height: 75vh;
+      height: 100vh;
 
       .about-heading{
           font-family: 'Poppins';
-          font-size: 1.5rem;
+          font-size: 2.5rem;
           color: #14447a;
       }
 
@@ -272,6 +279,7 @@ body{
             flex-direction: row;
             justify-content: space-around;
             align-items: center;
+            z-index: 1001;
 
             .card{
                 height: 280px;
@@ -302,13 +310,13 @@ body{
     }
     
     .medal{
-        z-index: 1;
         img{
             margin-top: 50px;
             height: 150px;
+            z-index: -10;
         }
     }
-    #why-chose-us{
+    #why-choose-us{
 
         background: linear-gradient(200deg, rgba(23,32,121,1) 2%, rgba(56,175,225,1) 100%);
 
@@ -346,17 +354,20 @@ body{
     
     
                     .description-card{
-                        background: rgba(255, 255, 255, 0.247);
+                        background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
                         border-radius: 15px;
                         backdrop-filter: blur(20px);
                         width: 80%;
                         height: 170px;
                         margin-left: 5vw;
-                        border: 1px solid white;
+                        
 
                         h1{
+                            margin-top: 3%;
                             font-family: 'Montserrat', sans-serif;
                             font-weight: bold;
+                            font-size: 1.5rem;
+                            color: white;
                         }
 
                         p{
@@ -376,6 +387,12 @@ body{
                 .app{
                     position: absolute;
                     right: -20%;
+                    transition: .3s;
+
+                    &:hover{
+                        cursor: pointer;
+                        right:-19%;
+                    }
                 }
             }
         }
