@@ -44,4 +44,18 @@ const agentOnly = async (req, res, next) => {
   }
 };
 
-module.exports = { redirectLogin, adminOnly, agentOnly };
+const workerOnly = async (req, res, next) => {
+  if (!req.session.userId) {
+    return res.redirect('/');
+  } else {
+    let { Role } = await DBM.getUserById(req.session.userId);
+
+    if (Role === 3) {
+      next();
+    } else {
+      return res.redirect('/');
+    }
+  }
+};
+
+module.exports = { redirectLogin, adminOnly, agentOnly, workerOnly };

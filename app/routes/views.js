@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const router = express.Router();
-const { redirectLogin, adminOnly } = require('./middlewares')
+const { redirectLogin, adminOnly, workerOnly } = require('./middlewares')
 
 router.get('/', (req, res, next) => {
   res.render('index');
@@ -23,7 +23,7 @@ router.get('/create-port', (req, res) => {
   res.render('create-port');
 });
 
-router.get('/shipment/:shipmentId', (req, res) => {
+router.get('/shipment/:shipmentId', workerOnly, (req, res) => {
   res.render('shipment', {shipmentId: req.params.shipmentId});
 });
 
