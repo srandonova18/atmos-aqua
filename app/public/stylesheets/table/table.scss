@@ -1,0 +1,21 @@
+*, html{
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+}
+
+div{
+    display: block;
+}
+
+table {
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 100%;
+}
+
+table, td, th {
+    border: 1px solid gray;
+}
+
+
