@@ -122,9 +122,14 @@ body .navbar .nav-left ul {
 
 body .navbar .nav-left ul li, body .navbar .nav-left ul a {
   text-decoration: none;
+  color: white;
 }
 
 body .navbar .nav-left ul li:visited, body .navbar .nav-left ul a:visited {
+  color: white;
+}
+
+body .navbar .nav-left ul li:default, body .navbar .nav-left ul a:default {
   color: white;
 }
 

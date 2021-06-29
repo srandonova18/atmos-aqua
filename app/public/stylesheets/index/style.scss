@@ -86,8 +86,13 @@ body{
 
                 li, a{
                     text-decoration: none;
+                    color: white;
 
                     &:visited{
+                        color: white;
+                    }
+
+                    &:default{
                         color: white;
                     }
                 }

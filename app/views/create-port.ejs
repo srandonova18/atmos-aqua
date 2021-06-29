@@ -26,17 +26,22 @@
     <div class="form-container">
         <div class="form-box">
 
-            <h1>Login</h1>
+            <h1>Register a port</h1>
             
-            <form method="post" action="/api/login" class="login-form">
-                <input type="email" name="email" id="login-email" class="input-field" placeholder="Email" autocomplete="off" required >
-                <input type="password" name="password" id="login-password" class="input-field" autocomplete="off" placeholder="Password" required>
-                <input type="submit" class="login-submit">
+            <form method="post" action="/api/register-port" class="port-form">
+                <input type="text" name="portName" id="portName-field" class="input-field" placeholder="Port Name" autocomplete="off" required >
+                <input type="text" name="firstName" id="first-name-field" class="input-field" autocomplete="off" placeholder="First Name" required>
+                <input type="text" name="middleName" id="middle-name-field" class="input-field" autocomplete="off" placeholder="Middle Name" required>
+                <input type="text" name="lastName" id="last-name-field" class="input-field" autocomplete="off" placeholder="Last Name" required>
+                <input type="email" name="email" id="email-field" class="input-field" autocomplete="off" placeholder="Email" required>
+                <input type="password" name="password" id="password-field" class="input-field" autocomplete="off" placeholder="Password" required>
+                <input type="submit" class="port-submit">
             </form>
         </div>
     </div>
     
      <button class="create-port-button">Create a port</button>
+     <button class="finish-selection-button">Finish Selection</button>
 
     <div id="map"></div>
 
