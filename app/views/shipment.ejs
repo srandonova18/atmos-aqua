@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/table/table.css">
     <title>Atmos</title>
 </head>
 <body>
@@ -20,14 +21,128 @@
     const shipmentId = document.querySelector('#shipment-id').innerHTML;
     const contentCont = document.querySelector('#content');
 
+    function generateTable(shipment) {
+        console.log(shipment)
+            let str = `
+            <table>
+              <tbody>
+                  <tr>
+                      <td>
+                          <div class="td_head">shipId</div>
+                      </td>
+                      <td>
+                          <div class="td_row_even">${shipment.shipId}</div>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <div class="td_head">companySender</div>
+                      </td>
+                      <td>
+                          <div class="td_row_even">${shipment.companySender}</div>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <div class="td_head">companyReciever</div>
+                      </td>
+                      <td>
+                          <div class="td_row_even">${shipment.companyReciever}</div>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td colspan="2">
+                          <div class="td_head">containers</div>
+                          <table style="width:100%">
+                              <tbody>
+                                <tr>
+                                      <td>
+                                          <div class="td_head">id</div>
+                                      </td>
+                                      <td>
+                                          <div class="td_head">goods</div>
+                                      </td>
+                                  </tr>
+                  `
+                  for(const cont of shipment.containers) {
+                      str+=`<tr>
+                                      <td class="td_row_even">
+                                          <div class="td_row_even">${cont.id}</div>
+                                      </td>
+                                      <td class="td_row_even">
+                                          <table style="width:100%">
+                                      </td>
+                                      </tr> 
+                                        </tbody>`;
+                                        str+=`<tr>
+                                                      <td>
+                                                          <div class="td_head">Id</div>
+                                                      </td>
+                                                      <td>
+                                                          <div class="td_head">Name</div>
+                                                      </td>
+                                                      <td>
+                                                          <div class="td_head">Weight</div>
+                                                      </td>
+                                                      <td>
+                                                          <div class="td_head">Price</div>
+                                                      </td>
+                                                      <td>
+                                                          <div class="td_head">Description</div>
+                                                      </td>
+                                                  </tr>`;
+                      for(const good of cont.goods) {
+                        
+                        for(const item of good) {
+                        console.log(good);
+                          str+=`<tr>
+                                                      <td>
+                                                          <div class="td_head">${item.Id}</div>
+                                                      </td>
+                                                      <td>
+                                                          <div class="td_head">${item.Name}</div>
+                                                      </td>
+                                                      <td>
+                                                          <div class="td_head">${item.Weight}</div>
+                                                      </td>
+                                                      <td>
+                                                          <div class="td_head">${item.Price}</div>
+                                                      </td>
+                                                      <td>
+                                                          <div class="td_head">${item.Description}</div>
+                                                      </td>
+                                                  </tr>`;
+                                                  
+                      }
+                      //str+='</tr>'
+                      
+                      
+                    }
+                    
+                    str+='</tr>'
+                    str+='</table>'
+                  }
+                  
+                  str+=`</tbody>
+                          </table>
+                      </td>
+                  </tr>
+              </tbody>
+            </table>`;
+            document.getElementById("table").innerHTML = str;
+        }
+
     (async function() {
       let result = await fetch(`/api/get-shipment/${shipmentId}`, {method: 'get'});
       let obj = await result.json();
       
-      console.log(Object.keys(obj));
+      generateTable(obj);
     })();
-  </script>
 
+
+
+  </script>
+  <div id="table"></div>
   <!-- <script src="javascripts/shipmentDisplayScript.js"></script> -->
 </body>
 </html>
