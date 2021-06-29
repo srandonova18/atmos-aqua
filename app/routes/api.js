@@ -174,6 +174,11 @@ router.post('/create-shipment', agentOnly, async (req, res) => {
   }
 
   companyReceiver = companyId;
+
+  companySender = await DBM.getCompanyName(companySender);
+  companyReceiver = await DBM.getCompanyName(companyReceiver);
+  
+  console.log(`companyReceiver:${companyReceiver}`);
   
   console.log({
     portId,
@@ -183,13 +188,16 @@ router.post('/create-shipment', agentOnly, async (req, res) => {
     containers
   });
 
+  console.log(containers[1].goods);
+
   await DBM.createShipment({
     portId,
     shipId,
     companySender,
-    companyReceiver,
+    companyReciever: companyReceiver,
     containers
   });
+
 
   res.redirect('/agent')
 });

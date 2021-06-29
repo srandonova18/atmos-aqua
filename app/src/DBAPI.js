@@ -593,7 +593,7 @@ class ShipmentManager {
         }
     }
 
-    #getCompanyName = async function(companyId) {
+    getCompanyName = async function(companyId) {
         try {
             let pool = await this.#pool;
             let result = await pool.request()
@@ -637,7 +637,7 @@ class ShipmentManager {
                 .output("ShipmentId",sql.Int)
                 .execute("CreateShipment")
 
-            console.log("DBAPI.js: Inserting shipment data: "+shipment);  
+            console.log("DBAPI.js: Inserting shipment data: "+shipment);
             return result.output.ShipmentId;
            
         } catch(err) {
@@ -692,6 +692,7 @@ class ShipmentManager {
         try {
 
             let shipmentId = await this.#insertShipmentData(shipment);
+                console.log(`shipmentId:${shipmentId}`);
             await this.#insertContainersShipmentsData(shipment,shipmentId);
             await this.#insertGoodsData(shipment);
 
@@ -728,8 +729,8 @@ class ShipmentManager {
 
             shipment.shipId = await this.#getShipName(results.recordset[0].ShipId);
             shipment.containerCount = results.recordset[0].ContainerCount;
-            shipment.companySender = await this.#getCompanyName(results.recordset[0].CompanySender);
-            shipment.companyReciever = await this.#getCompanyName(results.recordset[0].CompanyReciever);
+            shipment.companySender = await this.getCompanyName(results.recordset[0].CompanySender);
+            shipment.companyReciever = await this.getCompanyName(results.recordset[0].CompanyReciever);
 
             console.log("DBAPI.js: Getting shipment information: "+shipmentId);  
 
