@@ -353,6 +353,9 @@ body .form-container .form-box .login-form .login-submit:hover {
 
 .site-container #why-chose-us .heading {
   height: 10%;
+  color: white;
+  font-family: 'Lato';
+  font-size: 2rem;
 }
 
 .site-container #why-chose-us .sections {
@@ -371,21 +374,18 @@ body .form-container .form-box .login-form .login-submit:hover {
 
 .site-container #why-chose-us .sections .left {
   width: 50%;
-}
-
-.site-container #why-chose-us .sections .right {
-  width: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.site-container #why-chose-us .sections .right .heading {
+.site-container #why-chose-us .sections .left .heading {
   position: absolute;
   left: 70%;
+  color: white;
 }
 
-.site-container #why-chose-us .sections .right .description-cards-container {
+.site-container #why-chose-us .sections .left .description-cards-container {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -400,7 +400,7 @@ body .form-container .form-box .login-form .login-submit:hover {
       align-self: right;
 }
 
-.site-container #why-chose-us .sections .right .description-cards-container .description-card {
+.site-container #why-chose-us .sections .left .description-cards-container .description-card {
   background: rgba(255, 255, 255, 0.247);
   border-radius: 15px;
   -webkit-backdrop-filter: blur(20px);
@@ -408,6 +408,28 @@ body .form-container .form-box .login-form .login-submit:hover {
   width: 80%;
   height: 170px;
   margin-left: 5vw;
+  border: 1px solid white;
+}
+
+.site-container #why-chose-us .sections .left .description-cards-container .description-card h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}
+
+.site-container #why-chose-us .sections .left .description-cards-container .description-card p {
+  font-family: 'Lato';
+  font-weight: normal;
+  font-size: 1.5rem;
+  margin-top: 30px;
+}
+
+.site-container #why-chose-us .sections .right {
+  width: 50%;
+}
+
+.site-container #why-chose-us .sections .right .app {
+  position: absolute;
+  right: -20%;
 }
 
 @-webkit-keyframes blurFormBackground {
