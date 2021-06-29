@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet.pm@latest/dist/leaflet.pm.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="stylesheets/admin/admin.css">
+    <link rel="stylesheet" href="stylesheets/createPort/create-port.css">
 </head>
 
 <body>
@@ -23,10 +23,30 @@
         </div>
     </nav>
 
+    <div class="form-container">
+        <div class="form-box">
+
+            <h1>Login</h1>
+            
+            <form method="post" action="/api/login" class="login-form">
+                <input type="email" name="email" id="login-email" class="input-field" placeholder="Email" autocomplete="off" required >
+                <input type="password" name="password" id="login-password" class="input-field" autocomplete="off" placeholder="Password" required>
+                <input type="submit" class="login-submit">
+            </form>
+        </div>
+    </div>
+    
+     <button class="create-port-button">Create a port</button>
+
     <div id="map"></div>
+
+    <div class="instructions">
+        <h1>Outline your port</h1>
+    </div>
     
     <script src="https://unpkg.com/leaflet.pm@latest/dist/leaflet.pm.min.js"></script>
 
     <script type="text/javascript" src="javascripts/leafletAdmin.js"></script>
+    <script type="text/javascript" src="javascripts/createPort.js"></script>
 </body>
 </html>
