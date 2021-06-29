@@ -195,8 +195,8 @@ body {
   top: 0;
   left: 0;
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 99;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -218,7 +218,7 @@ body {
   -webkit-backdrop-filter: blur(15px);
           backdrop-filter: blur(15px);
   border: 1px white solid;
-  z-index: 100;
+  z-index: 100000;
   opacity: 0;
 }
 

@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato%3A100%2C300%2C400%2C500%2C600%2C700%2C800%2C900%7CMontserrat%3A100%2C300%2C400%2C500%2C600%2C700%2C800%2C900&amp;subset=latin%2Clatin-ext%2Ccyrillic%2Ccyrillic-ext%2Cgreek%2Cgreek-ext%2Cvietnamese');
+
+*{
+    padding: 0;
+    margin: 0;
+}
 #map {
     width: 100%;
     top: 7vh;
@@ -64,5 +75,117 @@
             position: absolute;
             right: 5%;
         }
+    }
+}
+
+.input-field{
+    width: 60%;
+    margin-bottom: 15px;
+    outline:none;
+    padding: 1em 1.8em;
+    border: 1px rgba(255, 255, 255, 0.342) solid;
+    border-radius: 15px;
+    background:rgba(255, 255, 255, 0.151);
+    backdrop-filter: blur(20px);
+    color:white;
+    transition: .2s;
+
+    &::placeholder{
+        color:#9798b1;
+    }
+
+    &:focus{
+        background:rgba(20, 5, 61, 0.301);
+        border-color:rgb(255, 0, 140);
+        box-shadow: rgba(255, 0, 140, 0.349) 0px 0px 15px 0.5px ;
+    }
+}
+
+.form-bg-blur-animation{
+    animation: 0.8s ease 0s 1 normal forwards running blurFormBackground;
+}
+
+.form-enter-animation{
+    animation: 2s cubic-bezier(0.075, 0.82, 0.165, 1) .5s 1 normal forwards running loginFormEnter;
+}
+
+.form-container{
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100000;
+    align-items: center;
+    justify-content: center;
+    display: none;
+    
+    .form-box{
+        top: 15%;   
+        left: 40%;
+        position: fixed;
+        width: 400px;
+        height: 500px;
+        background: rgba(255, 255, 255, 0.164);
+        border-radius: 15px;
+        backdrop-filter: blur(15px);
+        border: 1px white solid;
+        z-index: 10000;
+        opacity: 0;
+
+        h1{
+            color: white;
+            font-family: 'Poppins';
+            margin-left: 100px;
+        }
+
+        .worker-form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .worker-submit{
+                padding: 1em 8em;
+                background: linear-gradient(to left, #28e8ae, #28b6e8 );
+                outline: none;
+                border:none;
+                border-radius: 15px;
+                color: white;
+                box-shadow: rgba(1, 12, 112, 0.349) 0px 0px 15px 0.5px;
+                cursor: pointer;
+                transition: .2s;
+
+                &:hover{
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+}
+
+@keyframes blurFormBackground{
+    0%{
+        backdrop-filter: blur(0px);
+    }
+
+    100%{
+        backdrop-filter: blur(20px);
+    }
+}
+
+@keyframes loginFormEnter{
+    0%{
+        transform: rotateX(-18deg);
+        opacity: 0;
+        margin-bottom: 60px;
+        backdrop-filter: blur(0px);
+        box-shadow: rgba(22, 31, 39, 0.42) 0px 60px 123px -25px;
+    }
+
+    100%{
+        transform: rotateX(0);
+        opacity: 1;
+        margin-bottom: 0;
+        backdrop-filter: blur(30px);
     }
 }
