@@ -74,6 +74,7 @@ section {
 
 body {
   overflow-x: hidden;
+  zoom: 80%;
 }
 
 body .navbar {

@@ -9,6 +9,10 @@
   margin: 0;
 }
 
+body {
+  zoom: 80%;
+}
+
 .input-field {
   width: 60%;
   margin-bottom: 15px;
